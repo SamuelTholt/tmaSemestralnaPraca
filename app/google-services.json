@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "570460279948",
+    "project_id": "tmasemestralnapraca",
+    "storage_bucket": "tmasemestralnapraca.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:570460279948:android:44b2acbef1ad468c93d7a9",
+        "android_client_info": {
+          "package_name": "com.example.tmasemestralnapraca"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMScsiCfVcYn-X0DXu6XYa4mcCKgXtork"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
