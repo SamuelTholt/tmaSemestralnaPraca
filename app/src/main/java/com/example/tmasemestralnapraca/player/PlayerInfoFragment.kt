@@ -1,60 +1,80 @@
 package com.example.tmasemestralnapraca.player
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.tmasemestralnapraca.R
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+import com.example.tmasemestralnapraca.databinding.FragmentPlayerInfoBinding
+import kotlinx.coroutines.launch
 
-/**
- * A simple [Fragment] subclass.
- * Use the [PlayerInfoFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class PlayerInfoFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private var playerId: String? = null
+    private var _binding: FragmentPlayerInfoBinding? = null
+    private val binding get() = _binding!!
+    private val playerRepository = PlayerRepository()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+            playerId = it.getString("player_id")
         }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_player_info, container, false)
+    ): View {
+        _binding = FragmentPlayerInfoBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    @SuppressLint("SetTextI18n")
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+
+        // Načítať údaje hráča z databázy
+        playerId?.let { id ->
+            lifecycleScope.launch {
+                val player = playerRepository.getPlayerById(id)
+                player?.let {
+                    binding.firstNameTv.text = it.firstName
+                    binding.lastNameTv.text = it.lastName
+                    binding.numberOfShirtTv.text = it.numberOfShirt.toString()
+                    binding.positionTv.text = it.position
+                    binding.goalsTv.text = it.goals.toString()
+                    binding.assistsTv.text = it.assists.toString()
+                    binding.yellowCardsTv.text = it.yellowCards.toString()
+                    binding.redCardsTv.text = it.redCards.toString()
+                    binding.minutesPlayedTv.text = it.minutesPlayed.toString()
+                }
+            }
+        }
+
+        binding.buttonBack.setOnClickListener {
+            findNavController().navigateUp()
+        }
+
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment PlayerInfoFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            PlayerInfoFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+        fun newInstance(playerId: Int): PlayerInfoFragment {
+            val fragment = PlayerInfoFragment()
+            val args = Bundle()
+            args.putInt("player_id", playerId)
+            fragment.arguments = args
+            return fragment
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

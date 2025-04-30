@@ -22,5 +22,10 @@
             android:name="player_id"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/adminLoginFragment"
+        android:name="com.example.tmasemestralnapraca.admin.AdminLoginFragment"
+        android:label="fragment_admin_login"
+        tools:layout="@layout/fragment_admin_login" />
 
 </navigation>

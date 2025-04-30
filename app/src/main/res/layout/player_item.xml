@@ -14,12 +14,14 @@
         android:layout_width="match_parent"
         android:layout_height="127dp"
         android:padding="10dp"
+        android:background="@drawable/card_background"
         tools:ignore="TextSizeCheck">
 
         <ImageView
             android:id="@+id/img_name"
             android:layout_width="22dp"
             android:layout_height="19dp"
+            android:layout_marginTop="8dp"
             android:src="@drawable/name_icon"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -29,6 +31,7 @@
             android:id="@+id/firstNameTv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:text="John"
             android:textColor="@color/color_white_f4fefd"
             android:textSize="14sp"
