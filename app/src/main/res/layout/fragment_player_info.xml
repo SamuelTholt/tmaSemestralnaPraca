@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/scrollView"
+    android:background="@color/bck_color_1B2223">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="70dp"
+        android:background="@color/bck_color_1B2223"
+        tools:context=".player.PlayerInfoFragment">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
+            android:layout_width="412dp"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/color3a4f50"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="8dp"
+            app:cardUseCompatPadding="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+
+                <ImageView
+                    android:id="@+id/img_name"
+                    android:layout_width="22dp"
+                    android:layout_height="19dp"
+                    android:layout_marginTop="16dp"
+                    android:src="@drawable/name_icon"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    android:id="@+id/firstName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/player_name"
+                    android:textColor="@color/color_white_f4fefd"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline"
+                    app:layout_constraintStart_toEndOf="@+id/img_name"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/firstNameTv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="John"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/guideline"
+                    app:layout_constraintTop_toTopOf="@id/firstName"
+                    tools:ignore="HardcodedText" />
+
+
+                <ImageView
+                    android:id="@+id/img_lastname"
+                    android:layout_width="22dp"
+                    android:layout_height="19dp"
+                    android:layout_marginTop="32dp"
+                    android:src="@drawable/lastname_icon"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/img_name"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    android:id="@+id/lastName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:text="@string/player_lastName"
+                    android:textColor="@color/color_white_f4fefd"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline"
+                    app:layout_constraintStart_toEndOf="@+id/img_lastname"
+                    app:layout_constraintTop_toBottomOf="@id/firstName" />
+
+                <TextView
+                    android:id="@+id/lastNameTv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Doe"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/guideline"
+                    app:layout_constraintTop_toTopOf="@id/lastName"
+                    tools:ignore="HardcodedText" />
+
+
+                <ImageView
+                    android:id="@+id/img_number"
+                    android:layout_width="22dp"
+                    android:layout_height="19dp"
+                    android:layout_marginTop="33dp"
+                    android:src="@drawable/football_jersey_icon"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/img_lastname"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    android:id="@+id/numberOfShirt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:text="@string/player_number"
+                    android:textColor="@color/color_white_f4fefd"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline"
+                    app:layout_constraintStart_toEndOf="@+id/img_number"
+                    app:layout_constraintTop_toBottomOf="@id/lastName" />
+
+                <TextView
+                    android:id="@+id/numberOfShirtTv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="10"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/guideline"
+                    app:layout_constraintTop_toTopOf="@id/numberOfShirt"
+                    tools:ignore="HardcodedText" />
+
+                <ImageView
+                    android:id="@+id/img_position"
+                    android:layout_width="22dp"
+                    android:layout_height="19dp"
+                    android:layout_marginTop="32dp"
+                    android:src="@drawable/position_icon"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/img_number"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    android:id="@+id/position"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:text="@string/player_position"
+                    android:textColor="@color/color_white_f4fefd"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline"
+                    app:layout_constraintStart_toEndOf="@+id/img_position"
+                    app:layout_constraintTop_toBottomOf="@id/numberOfShirt" />
+
+                <TextView
+                    android:id="@+id/positionTv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Forward"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/guideline"
+                    app:layout_constraintTop_toTopOf="@id/position"
+                    tools:ignore="HardcodedText" />
+
+                <ImageView
+                    android:id="@+id/img_goals"
+                    android:layout_width="22dp"
+                    android:layout_height="19dp"
+                    android:layout_marginTop="32dp"
+                    android:src="@drawable/goal_icon"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/img_position"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    android:id="@+id/goals"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:text="@string/player_goals"
+                    android:textColor="@color/color_white_f4fefd"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline"
+                    app:layout_constraintStart_toEndOf="@+id/img_goals"
+                    app:layout_constraintTop_toBottomOf="@id/position" />
+
+                <TextView
+                    android:id="@+id/goalsTv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="15"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/guideline"
+                    app:layout_constraintTop_toTopOf="@id/goals"
+                    tools:ignore="HardcodedText" />
+
+                <ImageView
+                    android:id="@+id/img_assists"
+                    android:layout_width="22dp"
+                    android:layout_height="19dp"
+                    android:layout_marginTop="33dp"
+                    android:src="@drawable/assists_icon"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/img_goals"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    android:id="@+id/assists"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:text="@string/player_assists"
+                    android:textColor="@color/color_white_f4fefd"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline"
+                    app:layout_constraintStart_toEndOf="@+id/img_assists"
+                    app:layout_constraintTop_toBottomOf="@id/goals" />
+
+                <TextView
+                    android:id="@+id/assistsTv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="10"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/guideline"
+                    app:layout_constraintTop_toTopOf="@id/assists"
+                    tools:ignore="HardcodedText" />
+
+                <ImageView
+                    android:id="@+id/img_yellow"
+                    android:layout_width="22dp"
+                    android:layout_height="19dp"
+                    android:layout_marginTop="32dp"
+                    android:src="@drawable/yellow_card_icon"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/img_assists"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    android:id="@+id/yellowCards"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:text="@string/player_yellow"
+                    android:textColor="@color/color_white_f4fefd"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline"
+                    app:layout_constraintStart_toEndOf="@+id/img_yellow"
+                    app:layout_constraintTop_toBottomOf="@id/assists" />
+
+                <TextView
+                    android:id="@+id/yellowCardsTv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="2"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/guideline"
+                    app:layout_constraintTop_toTopOf="@id/yellowCards"
+                    tools:ignore="HardcodedText" />
+
+                <ImageView
+                    android:id="@+id/img_red"
+                    android:layout_width="22dp"
+                    android:layout_height="19dp"
+                    android:layout_marginTop="33dp"
+                    android:src="@drawable/red_card_icon"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/img_yellow"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    android:id="@+id/redCards"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:text="@string/player_red"
+                    android:textColor="@color/color_white_f4fefd"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline"
+                    app:layout_constraintStart_toEndOf="@+id/img_red"
+                    app:layout_constraintTop_toBottomOf="@id/yellowCards" />
+
+                <TextView
+                    android:id="@+id/redCardsTv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="1"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/guideline"
+                    app:layout_constraintTop_toTopOf="@id/redCards"
+                    tools:ignore="HardcodedText" />
+
+
+                <ImageView
+                    android:id="@+id/img_time"
+                    android:layout_width="22dp"
+                    android:layout_height="19dp"
+                    android:layout_marginTop="32dp"
+                    android:src="@drawable/time_icon"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/img_red"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    android:id="@+id/minutesPlayed"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:text="@string/player_minutes"
+                    android:textColor="@color/color_white_f4fefd"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline"
+                    app:layout_constraintStart_toEndOf="@+id/img_time"
+                    app:layout_constraintTop_toBottomOf="@id/redCards" />
+
+                <TextView
+                    android:id="@+id/minutesPlayedTv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="1200"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/guideline"
+                    app:layout_constraintTop_toTopOf="@id/minutesPlayed"
+                    tools:ignore="HardcodedText" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.52" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <Button
+            android:id="@+id/button_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/color0ef6cc"
+            android:text="@string/navrat_na_supisku"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView"
+            app:layout_constraintVertical_bias="0.462" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

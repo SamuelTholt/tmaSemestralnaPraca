@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="sort_options">
+        <item>Číslo</item>
+        <item>Meno</item>
+        <item>Priezvisko</item>
+        <item>Pozícia</item>
+    </string-array>
+    <string-array name="sort_options_post">
+        <item>Zostupne</item>
+        <item>Vzostupne</item>
+    </string-array>
+
+    <string-array name="player_positions">
+        <item>Brankár</item>
+        <item>Obranca</item>
+        <item>Záložník</item>
+        <item>Útočník</item>
+    </string-array>
+</resources>

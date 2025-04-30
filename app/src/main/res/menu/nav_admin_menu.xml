@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_players"
+        android:icon="@drawable/supiska_icon"
+        android:title="@string/supiska" />
+    <item
+        android:id="@+id/nav_teams"
+        android:icon="@drawable/trophy"
+        android:title="@string/teams" />
+    <item
+        android:id="@+id/nav_posts"
+        android:title="@string/post"
+        android:icon="@drawable/post_icon" />
+    <item
+        android:id="@+id/nav_gallery"
+        android:icon="@android:drawable/ic_menu_camera"
+        android:title="@string/gallery" />
+
+    <item
+        android:id="@+id/nav_exit"
+        android:icon="@android:drawable/ic_menu_close_clear_cancel"
+        android:title="@string/exit_app" />
+    <item
+        android:id="@+id/nav_separator"
+        android:title="--------------------"
+        tools:ignore="HardcodedText" />
+    <item
+        android:id="@+id/nav_logout"
+        android:icon="@drawable/logout_icon"
+        android:title="Odhlásiť sa"
+        tools:ignore="HardcodedText" />
+
+</menu>

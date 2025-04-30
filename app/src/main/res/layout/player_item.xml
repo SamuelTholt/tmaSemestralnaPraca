@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="8dp"
+    app:cardUseCompatPadding="true"
+    app:cardBackgroundColor="@color/color3a4f50">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="127dp"
+        android:padding="10dp"
+        tools:ignore="TextSizeCheck">
+
+        <ImageView
+            android:id="@+id/img_name"
+            android:layout_width="22dp"
+            android:layout_height="19dp"
+            android:src="@drawable/name_icon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/firstNameTv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="John"
+            android:textColor="@color/color_white_f4fefd"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline"
+            app:layout_constraintStart_toEndOf="@+id/img_name"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="HardcodedText" />
+
+
+        <ImageView
+            android:id="@+id/img_lastname"
+            android:layout_width="22dp"
+            android:layout_height="19dp"
+            android:src="@drawable/lastname_icon"
+            app:layout_constraintStart_toEndOf="@+id/firstNameTv"
+            app:layout_constraintTop_toTopOf="@+id/firstNameTv"
+            tools:ignore="ContentDescription" />
+
+
+        <TextView
+            android:id="@+id/lastNameTv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Doe"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/img_lastname"
+            app:layout_constraintTop_toTopOf="@+id/firstNameTv"
+            tools:ignore="HardcodedText" />
+
+        <ImageView
+            android:id="@+id/img_number"
+            android:layout_width="22dp"
+            android:layout_height="19dp"
+            android:layout_marginTop="52dp"
+            android:src="@drawable/football_jersey_icon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/img_name"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/numberOfShirtTv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="52dp"
+            android:text="10"
+            android:textColor="@color/color_white_f4fefd"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline"
+            app:layout_constraintStart_toEndOf="@+id/img_number"
+            app:layout_constraintTop_toBottomOf="@id/firstNameTv"
+            tools:ignore="HardcodedText" />
+
+
+        <ImageView
+            android:id="@+id/img_position"
+            android:layout_width="22dp"
+            android:layout_height="19dp"
+            android:src="@drawable/position_icon"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toTopOf="@+id/numberOfShirtTv"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/positionTv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Forward"
+            android:textColor="@color/color_white_f4fefd"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/img_position"
+            app:layout_constraintTop_toTopOf="@+id/numberOfShirtTv"
+            tools:ignore="HardcodedText" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.9" />
+
+        <ImageView
+            android:id="@+id/editBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@android:drawable/ic_menu_edit"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/deleteBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/infoBtn"
+            app:srcCompat="@android:drawable/ic_menu_delete"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/infoBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editBtn"
+            app:srcCompat="@android:drawable/ic_menu_info_details"
+            tools:ignore="ContentDescription" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

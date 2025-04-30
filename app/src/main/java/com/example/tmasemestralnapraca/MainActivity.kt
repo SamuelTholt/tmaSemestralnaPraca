@@ -1,20 +1,93 @@
 package com.example.tmasemestralnapraca
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.drawerlayout.widget.DrawerLayout
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
+import com.example.tmasemestralnapraca.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMainBinding
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContentView(R.layout.activity_main)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        // Nastavenie toolbaru ako ActionBar
+        setSupportActionBar(binding.toolbar)
+
+        // NavController pre navigáciu medzi fragmentami
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navController = navHostFragment.navController
+
+        // Prepojenie NavigationView s NavigationControllerom
+        binding.navigationView.setupWithNavController(navController)
+
+        val prefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
+        val isAdmin = prefs.getBoolean("isAdminLoggedIn", false)
+
+        val navView = binding.navigationView
+        navView.menu.clear()
+
+        if (isAdmin) {
+            navView.inflateMenu(R.menu.nav_admin_menu)
+        } else {
+            navView.inflateMenu(R.menu.nav_guest_menu)
+        }
+
+        binding.navigationView.setNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.nav_players -> navController.navigate(R.id.playerFragment)
+                R.id.nav_logout -> {
+                    prefs.edit().putBoolean("isAdminLoggedIn", false).apply()
+                    reloadNavigationMenu()
+                    navController.navigate(R.id.playerFragment)
+                }
+                R.id.nav_exit -> finish()
+            }
+            binding.drawerLayout.closeDrawers()
+            true
+        }
+
+        // Nastavenie DrawerToggle na otváranie/zatváranie menu
+        val drawerLayout: DrawerLayout = binding.drawerLayout
+        val toggle = ActionBarDrawerToggle(
+            this, drawerLayout, binding.toolbar,
+            R.string.navigation_drawer_open, R.string.navigation_drawer_close
+        )
+        drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
+
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            val isAdminNow = prefs.getBoolean("isAdminLoggedIn", false)
+            supportActionBar?.title = if (isAdminNow) "${destination.label} [Admin]" else "${destination.label}"
         }
     }
+
+    private fun reloadNavigationMenu() {
+        val prefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
+        val isAdmin = prefs.getBoolean("isAdminLoggedIn", false)
+
+        val navView = binding.navigationView
+        navView.menu.clear()
+
+        if (isAdmin) {
+            navView.inflateMenu(R.menu.nav_admin_menu)
+        } else {
+            navView.inflateMenu(R.menu.nav_guest_menu)
+        }
+    }
+
 }

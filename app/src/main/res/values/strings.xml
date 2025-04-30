@@ -1,3 +1,36 @@
 <resources>
     <string name="app_name">tmaSemestralnaPraca</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="navigation_drawer_open">Open Navigation Drawer</string>
+    <string name="navigation_drawer_close">Close Navigation Drawer</string>
+
+    <string name="player_save">Uložiť</string>
+    <string name="player_name">Meno hráča</string>
+    <string name="player_lastName">Priezvisko hráča</string>
+    <string name="player_number">Číslo dresu</string>
+    <string name="player_position">Pozícia hráča</string>
+    <string name="player_goals">Počet gólov</string>
+    <string name="player_assists">Počet asistencií</string>
+    <string name="player_yellow">Počet žltých kariet</string>
+    <string name="player_red">Počet červených kariet</string>
+    <string name="player_minutes">Počet odohraných minút</string>
+    <string name="supiska">Súpiska</string>
+    <string name="exit_app">Ukonči aplikáciu</string>
+    <string name="navrat_na_supisku">Návrat na súpisku</string>
+    <string name="admin_login">Admin Login</string>
+
+    <string name="post_header">Nadpis príspevku</string>
+    <string name="post_text">Text príspevku</string>
+    <string name="post">Príspevky</string>
+    <string name="gallery">Galéria</string>
+    <string name="teams">Tabuľka</string>
+
+    <string name="team_name">Názov tímu</string>
+    <string name="team_played">Počet odohratých zápasov</string>
+    <string name="team_goals_scored">Počet strelených zápasov</string>
+    <string name="team_conceded_scored">Počet inkasovaných zápasov</string>
+    <string name="team_points">Počet bodov</string>
+    <string name="team_logo_image">Pridať logo(obrázok)</string>
 </resources>
