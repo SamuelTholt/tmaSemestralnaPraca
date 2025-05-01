@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tmasemestralnapraca.databinding.PlayerItemBinding
 
+@Suppress("DEPRECATION")
 class PlayerAdapter(private val listener: PlayerClickListener,
                     private val isAdmin: Boolean) :
     ListAdapter<PlayerModel, PlayerAdapter.PlayerViewHolder>(PlayerDiffCallback()) {

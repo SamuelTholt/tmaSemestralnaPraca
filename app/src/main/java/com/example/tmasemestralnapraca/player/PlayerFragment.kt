@@ -53,7 +53,7 @@ class PlayerFragment : Fragment(), AddEditPlayerFragment.AddEditPlayerListener,
         attachListeners()
         observePlayers()
 
-        //binding.floatingActionButton.visibility = if (isAdmin) View.VISIBLE else View.GONE
+        binding.floatingActionButton.visibility = if (isAdmin) View.VISIBLE else View.GONE
 
         setupSearchView()
 

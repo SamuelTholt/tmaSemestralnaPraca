@@ -52,6 +52,8 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.bcrypt)
+    implementation(libs.cloudinary.cloudinary.android)
+    implementation(libs.github.bumptech.glide)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

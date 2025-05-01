@@ -1,5 +1,6 @@
 [versions]
 agp = "8.8.1"
+cloudinaryAndroidVersion = "3.0.2"
 kotlin = "1.9.24"
 coreKtx = "1.16.0"
 junit = "4.13.2"
@@ -14,6 +15,7 @@ firebaseFirestore = "25.1.4"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+cloudinary-cloudinary-android = { module = "com.cloudinary:cloudinary-android", version.ref = "cloudinaryAndroidVersion" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -25,6 +27,8 @@ firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore
 androidx-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fragment-ktx", version = "2.8.9"}
 androidx-navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx", version = "2.8.9"}
 bcrypt = { group = "at.favre.lib", name = "bcrypt", version = "0.9.0" }
+github-bumptech-glide = { group = "com.github.bumptech.glide", name = "glide", version = "4.12.0" }
+
 
 
 [plugins]
