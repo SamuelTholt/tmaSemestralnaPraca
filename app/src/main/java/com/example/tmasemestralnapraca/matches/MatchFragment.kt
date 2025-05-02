@@ -11,9 +11,11 @@ import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tmasemestralnapraca.databinding.FragmentMatchBinding
+import com.google.firebase.firestore.Query
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
+@Suppress("DEPRECATION")
 class MatchFragment : Fragment(), AddEditMatchFragment.AddEditMatchListener,
     MatchAdapter.MatchClickListener {
 
@@ -22,7 +24,7 @@ class MatchFragment : Fragment(), AddEditMatchFragment.AddEditMatchListener,
 
     private lateinit var adapter: MatchAdapter
 
-    private var currentSort: String = "Date"
+    private var currentSort: String = "Zostupne"
     private var currentFilter: String = "All"
     private var isAdmin: Boolean = false
 
@@ -114,23 +116,24 @@ class MatchFragment : Fragment(), AddEditMatchFragment.AddEditMatchListener,
 
     private fun observeMatches() {
         lifecycleScope.launch {
-            val allMatches = matchRepository.getAllMatches()
-
-            val filteredMatches = when (currentFilter) {
-                "All" -> allMatches
-                "Played" -> allMatches.filter { it.played }
-                "Upcoming" -> allMatches.filter { !it.played }
-                else -> allMatches
+            val playedFilter = when (currentFilter) {
+                "All" -> null  // Žiadny filter
+                "Played" -> true
+                "Upcoming" -> false
+                else -> null
             }
 
-            // Sort
-            val sortedMatches = when (currentSort) {
-                "Date" -> filteredMatches.sortedByDescending { it.date }
-                "Opponent" -> filteredMatches.sortedBy { it.opponentName }
-                else -> filteredMatches
+            val sortDirection = when (currentSort) {
+                "Vzostupne" -> Query.Direction.ASCENDING
+                "Zostupne" -> Query.Direction.DESCENDING
+                else -> null
             }
 
-            adapter.submitList(sortedMatches)
+            val matches = matchRepository.getFilteredAndSortedMatches(playedFilter, sortDirection)
+
+            matches.collect { matchList ->
+                adapter.submitList(matchList)
+            }
         }
     }
 

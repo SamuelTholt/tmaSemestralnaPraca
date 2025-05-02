@@ -45,7 +45,7 @@
     <fragment
         android:id="@+id/matchFragment"
         android:name="com.example.tmasemestralnapraca.matches.MatchFragment"
-        android:label="fragment_match"
+        android:label="Zápasy"
         tools:layout="@layout/fragment_match" />
 
 </navigation>

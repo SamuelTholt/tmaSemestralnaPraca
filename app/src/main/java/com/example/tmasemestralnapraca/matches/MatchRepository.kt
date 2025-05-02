@@ -2,9 +2,14 @@ package com.example.tmasemestralnapraca.matches
 
 import android.util.Log
 import com.example.tmasemestralnapraca.player.PlayerModel
+import com.example.tmasemestralnapraca.post.PostModel
 import com.example.tmasemestralnapraca.teams.TeamRepository
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 
@@ -279,6 +284,132 @@ class MatchRepository {
             Log.e("MatchRepository", "Error updating match detail", e)
             false
         }
+    }
+
+    fun getMatches(): Flow<List<MatchModel>> = callbackFlow {
+        val subscription = matchesCollection.addSnapshotListener { snapshot, error ->
+            if (error != null) {
+                close(error)
+                return@addSnapshotListener
+            }
+
+            if (snapshot != null) {
+                val matches = snapshot.documents.mapNotNull { doc ->
+                    doc.toObject(MatchModel::class.java)?.copy(id = doc.id)
+                }
+                trySend(matches)
+            }
+        }
+
+        awaitClose { subscription.remove() }
+    }
+
+    fun getPlayedMatches(): Flow<List<MatchModel>> = callbackFlow {
+        val subscription = matchesCollection
+            .whereEqualTo("played", true)
+            .addSnapshotListener { snapshot, error ->
+                if (error != null) {
+                    close(error)
+                    return@addSnapshotListener
+                }
+
+                if (snapshot != null) {
+                    val matches = snapshot.documents.mapNotNull { doc ->
+                        doc.toObject(MatchModel::class.java)?.copy(id = doc.id)
+                    }
+                    trySend(matches)
+                }
+            }
+
+        awaitClose { subscription.remove() }
+    }
+
+    fun getUpcomingMatches(): Flow<List<MatchModel>> = callbackFlow {
+        val subscription = matchesCollection
+            .whereEqualTo("played", false)
+            .addSnapshotListener { snapshot, error ->
+                if (error != null) {
+                    close(error)
+                    return@addSnapshotListener
+                }
+
+                if (snapshot != null) {
+                    val matches = snapshot.documents.mapNotNull { doc ->
+                        doc.toObject(MatchModel::class.java)?.copy(id = doc.id)
+                    }
+                    trySend(matches)
+                }
+            }
+
+        awaitClose { subscription.remove() }
+    }
+
+    fun getMatchSortedByDateAsc(): Flow<List<MatchModel>> = callbackFlow {
+        val subscription = matchesCollection.orderBy("date", Query.Direction.ASCENDING)
+            .addSnapshotListener { snapshot, error ->
+                if (error != null) {
+                    close(error)
+                    return@addSnapshotListener
+                }
+
+                if (snapshot != null) {
+                    val matches = snapshot.documents.mapNotNull { doc ->
+                        doc.toObject(MatchModel::class.java)?.copy(id = doc.id)
+                    }
+                    trySend(matches)
+                }
+            }
+
+        awaitClose { subscription.remove() }
+    }
+
+    fun getMatchSortedByDateDesc(): Flow<List<MatchModel>> = callbackFlow {
+        val subscription = matchesCollection.orderBy("date", Query.Direction.DESCENDING)
+            .addSnapshotListener { snapshot, error ->
+                if (error != null) {
+                    close(error)
+                    return@addSnapshotListener
+                }
+
+                if (snapshot != null) {
+                    val matches = snapshot.documents.mapNotNull { doc ->
+                        doc.toObject(MatchModel::class.java)?.copy(id = doc.id)
+                    }
+                    trySend(matches)
+                }
+            }
+
+        awaitClose { subscription.remove() }
+    }
+
+    fun getFilteredAndSortedMatches(played: Boolean?, sortDirection: Query.Direction?): Flow<List<MatchModel>> = callbackFlow {
+        val baseQuery = matchesCollection
+
+        var query = baseQuery as Query
+
+        if (played != null) {
+            query = query.whereEqualTo("played", played)
+        }
+
+        if (sortDirection != null) {
+            query = query.orderBy("date", sortDirection)
+        }
+
+        val subscription = query.addSnapshotListener { snapshot, error ->
+            if (error != null) {
+                close(error)
+                return@addSnapshotListener
+            }
+
+            if (snapshot != null) {
+                val matches = snapshot.documents.mapNotNull { doc ->
+                    doc.toObject(MatchModel::class.java)?.copy(id = doc.id)
+                }
+                trySend(matches)
+            }
+        }
+
+        awaitClose { subscription.remove() }
     }
 
 }

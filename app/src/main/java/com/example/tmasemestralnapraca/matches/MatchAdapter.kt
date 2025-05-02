@@ -116,8 +116,8 @@ class MatchAdapter(private val listener: MatchClickListener,
                     binding.homeTeamScoreTv.text = match.opponentScore.toString()
                     binding.awayTeamScoreTv.text = match.ourScore.toString()
                 } else {
-                    binding.homeTeamScoreTv.text = match.ourScore.toString()
-                    binding.awayTeamScoreTv.text = match.opponentScore.toString()
+                    binding.homeTeamScoreTv.text = "-"
+                    binding.awayTeamScoreTv.text = "-"
                 }
             }
 
