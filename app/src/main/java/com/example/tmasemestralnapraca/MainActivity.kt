@@ -45,6 +45,7 @@ class MainActivity : AppCompatActivity() {
             when (menuItem.itemId) {
                 R.id.nav_players -> navController.navigate(R.id.playerFragment)
                 R.id.nav_gallery -> navController.navigate(R.id.galleryFragment)
+                R.id.nav_posts -> navController.navigate(R.id.postFragment)
                 R.id.nav_logout -> {
                     prefs.edit().putBoolean("isAdminLoggedIn", false).apply()
                     reloadNavigationMenu()

@@ -34,7 +34,7 @@ class ImageRepository {
         }
     }
 
-    suspend fun deletePlayerById(id: String) {
+    suspend fun deleteImageById(id: String) {
         imageCollection.document(id).delete().await()
     }
 

@@ -25,12 +25,17 @@
     <fragment
         android:id="@+id/adminLoginFragment"
         android:name="com.example.tmasemestralnapraca.admin.AdminLoginFragment"
-        android:label="fragment_admin_login"
+        android:label="@string/admin_login"
         tools:layout="@layout/fragment_admin_login" />
     <fragment
         android:id="@+id/galleryFragment"
         android:name="com.example.tmasemestralnapraca.gallery.GalleryFragment"
-        android:label="fragment_gallery"
+        android:label="@string/gallery"
         tools:layout="@layout/fragment_gallery" />
+    <fragment
+        android:id="@+id/postFragment"
+        android:name="com.example.tmasemestralnapraca.post.PostFragment"
+        android:label="@string/post"
+        tools:layout="@layout/fragment_post" />
 
 </navigation>

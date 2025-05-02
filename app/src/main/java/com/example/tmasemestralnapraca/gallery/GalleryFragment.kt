@@ -246,7 +246,7 @@ class GalleryFragment : Fragment(), GalleryAdapter.PhotoClickListener {
                         if (result["result"] == "ok") {
                             // Odstránenie z Firebase
                             imageModel.id?.let { id ->
-                                imageRepository.deletePlayerById(id)
+                                imageRepository.deleteImageById(id)
                             }
 
                             withContext(Dispatchers.Main) {
@@ -265,7 +265,7 @@ class GalleryFragment : Fragment(), GalleryAdapter.PhotoClickListener {
                             // Skúsime odstrániť aspoň z Firebase ak zlyhalo odstránenie z Cloudinary
                             try {
                                 imageModel.id?.let { id ->
-                                    imageRepository.deletePlayerById(id)
+                                    imageRepository.deleteImageById(id)
                                     showToast("Obrázok bol odstránený z databázy, ale nie z Cloudinary")
                                 }
                             } catch (innerE: Exception) {
@@ -276,7 +276,7 @@ class GalleryFragment : Fragment(), GalleryAdapter.PhotoClickListener {
                 } else {
                     // Ak nemáme publicId, odstránime len z databázy
                     imageModel.id?.let { id ->
-                        imageRepository.deletePlayerById(id)
+                        imageRepository.deleteImageById(id)
                         withContext(Dispatchers.Main) {
                             showToast("Obrázok bol odstránený z databázy")
                         }
