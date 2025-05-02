@@ -1,5 +1,6 @@
 package com.example.tmasemestralnapraca.teams
 
+import com.example.tmasemestralnapraca.matches.MatchModel
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import kotlinx.coroutines.Dispatchers
@@ -156,5 +157,14 @@ class TeamRepository {
         }
 
         batch.commit().await()
+    }
+
+    suspend fun getTeams(): List<TeamModel> = withContext(Dispatchers.IO) {
+        val snapshot = teamsCollection.get().await()
+        val teams = snapshot.documents.mapNotNull {
+            it.toObject(TeamModel::class.java)?.apply { id = it.id }
+        }
+
+        return@withContext teams
     }
 }

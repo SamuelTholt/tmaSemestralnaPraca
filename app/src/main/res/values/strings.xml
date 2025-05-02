@@ -33,4 +33,12 @@
     <string name="team_conceded_scored">Počet inkasovaných zápasov</string>
     <string name="team_points">Počet bodov</string>
     <string name="team_logo_image">Pridať logo(obrázok)</string>
+    <string name="team_logo">Logo tímu</string>
+    <string name="our_score">Naše skóre</string>
+    <string name="opponent_team_score">Skóre oponenta</string>
+    <string name="matchDate">Dátum zápasu</string>
+    <string name="isPlayed">Odohratý?</string>
+    <string name="isPlayedHome">Doma?</string>
+    <string name="matches">Zápasy</string>
+    <string name="matchTime">Čas zápasu</string>
 </resources>

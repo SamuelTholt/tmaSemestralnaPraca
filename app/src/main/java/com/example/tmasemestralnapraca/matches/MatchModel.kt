@@ -8,6 +8,6 @@ data class MatchModel (
     val ourScore: Int = 0,
     val opponentScore: Int = 0,
     val date: String = "",
-    val isPlayed: Boolean = false,
-    val isPlayedHome: Boolean = true
+    val played: Boolean = false,
+    val playedHome: Boolean = true
 )

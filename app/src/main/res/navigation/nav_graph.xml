@@ -42,5 +42,10 @@
         android:name="com.example.tmasemestralnapraca.teams.TeamFragment"
         android:label="fragment_team"
         tools:layout="@layout/fragment_team" />
+    <fragment
+        android:id="@+id/matchFragment"
+        android:name="com.example.tmasemestralnapraca.matches.MatchFragment"
+        android:label="fragment_match"
+        tools:layout="@layout/fragment_match" />
 
 </navigation>

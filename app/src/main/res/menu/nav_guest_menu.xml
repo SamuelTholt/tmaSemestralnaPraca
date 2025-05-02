@@ -13,6 +13,11 @@
         android:title="@string/teams" />
 
     <item
+        android:id="@+id/nav_matches"
+        android:icon="@drawable/ball_icon"
+        android:title="@string/matches" />
+
+    <item
         android:id="@+id/nav_posts"
         android:title="@string/post"
         android:icon="@drawable/post_icon" />

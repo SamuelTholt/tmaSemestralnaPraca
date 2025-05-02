@@ -47,6 +47,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_gallery -> navController.navigate(R.id.galleryFragment)
                 R.id.nav_posts -> navController.navigate(R.id.postFragment)
                 R.id.nav_teams -> navController.navigate(R.id.teamFragment)
+                R.id.nav_matches -> navController.navigate(R.id.matchFragment)
                 R.id.nav_logout -> {
                     prefs.edit().putBoolean("isAdminLoggedIn", false).apply()
                     reloadNavigationMenu()
