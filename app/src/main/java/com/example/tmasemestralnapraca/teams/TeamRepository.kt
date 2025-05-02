@@ -2,10 +2,12 @@ package com.example.tmasemestralnapraca.teams
 
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 
 class TeamRepository {
     private val firestore = FirebaseFirestore.getInstance()
@@ -59,6 +61,18 @@ class TeamRepository {
 
     suspend fun getTeamById(id: String): TeamModel? {
         return teamsCollection.document(id).get().await().toObject(TeamModel::class.java)
+    }
+
+    suspend fun getAllTeamsForSelection(): List<TeamModel> = withContext(Dispatchers.IO) {
+        val snapshot = teamsCollection.get().await()
+        return@withContext snapshot.documents.mapNotNull {
+            it.toObject(TeamModel::class.java)?.apply { id = it.id }
+        }
+    }
+
+    suspend fun getTeamByIdForSelection(teamId: String): TeamModel? = withContext(Dispatchers.IO) {
+        val document = teamsCollection.document(teamId).get().await()
+        return@withContext document.toObject(TeamModel::class.java)?.apply { id = document.id }
     }
 
 
