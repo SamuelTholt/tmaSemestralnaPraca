@@ -37,5 +37,10 @@
         android:name="com.example.tmasemestralnapraca.post.PostFragment"
         android:label="@string/post"
         tools:layout="@layout/fragment_post" />
+    <fragment
+        android:id="@+id/teamFragment"
+        android:name="com.example.tmasemestralnapraca.teams.TeamFragment"
+        android:label="fragment_team"
+        tools:layout="@layout/fragment_team" />
 
 </navigation>

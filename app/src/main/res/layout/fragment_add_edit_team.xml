@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    tools:context="teams.AddEditTeamFragment">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bck_color_1B2223"
+        android:padding="16dp">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/teamNameInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColorHint="@color/color_white_f4fefd"
+            app:boxBackgroundColor="@color/color3a4f50"
+            app:boxStrokeColor="@color/white"
+            app:boxStrokeWidth="2dp"
+            app:boxStrokeWidthFocused="2dp"
+            app:cursorColor="@color/white"
+            app:hintTextColor="@color/color_white_f4fefd"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/teamNameEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/team_name"
+                android:maxLines="1"
+                android:textColor="@color/color_white_f4fefd"
+                app:boxBackgroundColor="@color/color3a4f50"
+                tools:ignore="VisualLintTextFieldSize" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/teamplayedInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textColorHint="@color/color_white_f4fefd"
+            app:boxBackgroundColor="@color/color3a4f50"
+            app:boxStrokeColor="@color/white"
+            app:boxStrokeWidth="2dp"
+            app:boxStrokeWidthFocused="2dp"
+            app:cursorColor="@color/white"
+            app:hintTextColor="@color/color_white_f4fefd"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/teamNameInputLayout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/teamPlayedMatchesEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/team_played"
+                android:inputType="number"
+                android:maxLines="1"
+                android:textColor="@color/white"
+                tools:ignore="VisualLintTextFieldSize" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/teamScoredGoalsInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textColorHint="@color/color_white_f4fefd"
+            app:boxBackgroundColor="@color/color3a4f50"
+            app:boxStrokeColor="@color/white"
+            app:boxStrokeWidth="2dp"
+            app:boxStrokeWidthFocused="2dp"
+            app:cursorColor="@color/white"
+            app:hintTextColor="@color/color_white_f4fefd"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/teamplayedInputLayout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/teamScoredEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/team_goals_scored"
+                android:inputType="number"
+                android:maxLines="1"
+                android:textColor="@color/white"
+                tools:ignore="VisualLintTextFieldSize" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/teamGoalsConceredInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textColorHint="@color/color_white_f4fefd"
+            app:boxBackgroundColor="@color/color3a4f50"
+            app:boxStrokeColor="@color/white"
+            app:boxStrokeWidth="2dp"
+            app:boxStrokeWidthFocused="2dp"
+            app:cursorColor="@color/white"
+            app:hintTextColor="@color/color_white_f4fefd"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/teamScoredGoalsInputLayout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/teamGoalsConceredEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/team_conceded_scored"
+                android:inputType="number"
+                android:maxLines="1"
+                android:textColor="@color/white"
+                tools:ignore="VisualLintTextFieldSize" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/teamPointsInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textColorHint="@color/color_white_f4fefd"
+            app:boxBackgroundColor="@color/color3a4f50"
+            app:boxStrokeColor="@color/white"
+            app:boxStrokeWidth="2dp"
+            app:boxStrokeWidthFocused="2dp"
+            app:cursorColor="@color/white"
+            app:hintTextColor="@color/color_white_f4fefd"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/teamGoalsConceredInputLayout">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/teamPointsEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/team_points"
+                android:inputType="number"
+                android:maxLines="1"
+                android:textColor="@color/white"
+                tools:ignore="DuplicateClickableBoundsCheck,VisualLintTextFieldSize" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/saveBtn"
+            android:layout_width="150dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="8dp"
+            android:backgroundTint="@color/color0ef6cc"
+            android:text="@string/player_save"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/teamPointsInputLayout" />
+
+        <ImageView
+            android:id="@+id/imgLogo"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="32dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/teamPointsInputLayout"
+            tools:ignore="ContentDescription,ImageContrastCheck"
+            tools:src="@tools:sample/avatars" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/addPhotoBtn"
+            android:layout_width="150dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="@color/color0ef6cc"
+            android:text="@string/team_logo_image"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imgLogo" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
