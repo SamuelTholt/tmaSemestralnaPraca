@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tmasemestralnapraca.databinding.FragmentMatchBinding
+import com.example.tmasemestralnapraca.player.PlayerFragmentDirections
 import com.google.firebase.firestore.Query
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -149,7 +150,11 @@ class MatchFragment : Fragment(), AddEditMatchFragment.AddEditMatchListener,
             Toast.makeText(requireContext(), "Zápas bol úspešne pridaný!", Toast.LENGTH_SHORT).show()
     }
 
-    override fun onMatchClick(match: MatchModel) {
+    override fun onInfoMatchClick(match: MatchModel) {
+        //Toast.makeText(requireContext(), "Klikol si na info!", Toast.LENGTH_SHORT).show()
+        val action = MatchFragmentDirections.actionMatchFragmentToMatchEventDetailsFragment(match.id.toString())
+        findNavController().navigate(action)
+
     }
 
     override fun onEditMatchClick(match: MatchModel) {

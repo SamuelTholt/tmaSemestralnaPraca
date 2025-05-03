@@ -53,4 +53,6 @@
     <string name="pridat_hraca_do_zakladnej_zostavy">Pridať hráča do základnej zostavy</string>
     <string name="pridat_nahradnika">Pridať náhradníka</string>
     <string name="pridat_event">Pridať event</string>
+    <string name="zostava">Zostava</string>
+    <string name="minute">Minúta</string>
 </resources>

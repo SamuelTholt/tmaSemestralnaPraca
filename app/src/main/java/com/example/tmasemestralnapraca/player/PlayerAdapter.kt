@@ -31,7 +31,7 @@ class PlayerAdapter(private val listener: PlayerClickListener,
         RecyclerView.ViewHolder(binding.root) {
 
         init {
-            binding.root.setOnClickListener {
+            binding.infoBtn.setOnClickListener {
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
                     listener.onInfoPlayerClick(getItem(position))

@@ -48,14 +48,14 @@
         android:label="Zápasy"
         tools:layout="@layout/fragment_match" >
         <action
-            android:id="@+id/action_matchFragment_to_matchDetailsFragment"
-            app:destination="@id/matchDetailsFragment" />
+            android:id="@+id/action_matchFragment_to_matchEventDetailsFragment"
+            app:destination="@id/matchEventDetailsFragment" />
     </fragment>
     <fragment
-        android:id="@+id/matchDetailsFragment"
-        android:name="com.example.tmasemestralnapraca.matches.MatchDetailsFragment"
-        android:label="Detaily zápasu"
-        tools:layout="@layout/fragment_match_details">
+        android:id="@+id/matchEventDetailsFragment"
+        android:name="com.example.tmasemestralnapraca.matches.matchEvent.MatchEventDetailsFragment"
+        android:label="fragment_match_event_details"
+        tools:layout="@layout/fragment_match_event_details">
         <argument
             android:name="match_id"
             app:argType="string" />

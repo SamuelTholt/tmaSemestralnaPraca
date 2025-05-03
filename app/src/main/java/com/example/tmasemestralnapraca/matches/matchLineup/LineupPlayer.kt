@@ -1,4 +1,4 @@
-package com.example.tmasemestralnapraca.matches
+package com.example.tmasemestralnapraca.matches.matchLineup
 
 data class LineupPlayer(
     var id: String? = null,

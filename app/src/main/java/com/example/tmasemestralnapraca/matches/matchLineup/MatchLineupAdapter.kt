@@ -1,4 +1,4 @@
-package com.example.tmasemestralnapraca.matches
+package com.example.tmasemestralnapraca.matches.matchLineup
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater

@@ -1,4 +1,4 @@
-package com.example.tmasemestralnapraca.matches
+package com.example.tmasemestralnapraca.matches.matchEvent
 
 
 data class MatchEvent(

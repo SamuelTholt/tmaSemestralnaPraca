@@ -35,13 +35,10 @@ class MatchAdapter(private val listener: MatchClickListener,
         RecyclerView.ViewHolder(binding.root) {
 
         init {
-            binding.root.setOnClickListener {
+            binding.infoBtn.setOnClickListener {
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
-                    val match = getItem(position)
-                    if (match.played) {
-                        listener.onMatchClick(match)
-                    }
+                    listener.onInfoMatchClick(getItem(position))
                 }
             }
 
@@ -62,6 +59,21 @@ class MatchAdapter(private val listener: MatchClickListener,
 
         @SuppressLint("SetTextI18n")
         fun bind(match: MatchModel) {
+            if(isAdmin) {
+                binding.editBtn.visibility = ViewGroup.VISIBLE
+                binding.deleteBtn.visibility = ViewGroup.VISIBLE
+            } else {
+                binding.editBtn.visibility = ViewGroup.GONE
+                binding.deleteBtn.visibility = ViewGroup.GONE
+            }
+
+            if(match.played) {
+                binding.infoBtn.visibility = ViewGroup.VISIBLE
+            } else {
+                binding.infoBtn.visibility = ViewGroup.GONE
+            }
+
+
             try {
                 val dateFormat = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
                 val date = dateFormat.parse(match.date)
@@ -163,21 +175,11 @@ class MatchAdapter(private val listener: MatchClickListener,
             } else {
                 binding.winLoseDrawTv.visibility = View.INVISIBLE
             }
-
-            if (isAdmin) {
-                binding.editBtn.visibility = View.VISIBLE
-                binding.deleteBtn.visibility = View.VISIBLE
-                binding.infoBtn.visibility = View.VISIBLE
-            } else {
-                binding.editBtn.visibility = View.GONE
-                binding.deleteBtn.visibility = View.GONE
-                binding.infoBtn.visibility = View.VISIBLE
-            }
         }
     }
 
     interface MatchClickListener {
-        fun onMatchClick(match: MatchModel)
+        fun onInfoMatchClick(match: MatchModel)
         fun onEditMatchClick(match: MatchModel)
         fun onDeleteMatchClick(match: MatchModel)
     }
