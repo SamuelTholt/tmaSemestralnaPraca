@@ -17,6 +17,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tmasemestralnapraca.R
 import com.example.tmasemestralnapraca.databinding.FragmentMatchDetailsBinding
+import com.example.tmasemestralnapraca.matches.matchEvent.EventType
+import com.example.tmasemestralnapraca.matches.matchEvent.EventWithPlayer
+import com.example.tmasemestralnapraca.matches.matchEvent.MatchEvent
+import com.example.tmasemestralnapraca.matches.matchLineup.LineupPlayer
+import com.example.tmasemestralnapraca.matches.matchLineup.MatchLineupAdapter
+import com.example.tmasemestralnapraca.matches.matchLineup.PlayerWithStats
 import com.example.tmasemestralnapraca.player.PlayerModel
 import com.example.tmasemestralnapraca.player.PlayerRepository
 import kotlinx.coroutines.launch
@@ -36,10 +42,10 @@ class MatchDetailsFragment : Fragment() {
     private var matchEvent: MatchEvent? = null
     private var eventPlayer: EventWithPlayer? = null
 
+    private var isAdmin: Boolean = false
+
     private val MATCH_START_MINUTE = 0
     private val MATCH_END_MINUTE = 90
-
-    private var isAdmin: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -134,31 +140,50 @@ class MatchDetailsFragment : Fragment() {
 
         binding.startingLineupHeader.visibility = View.VISIBLE
         binding.startingLineupRecyclerView.visibility = View.VISIBLE
-        binding.btnAddToStartingLineup.visibility = View.VISIBLE
+        binding.btnAddToStartingLineup.visibility = if (isAdmin) View.VISIBLE else View.GONE
 
         binding.substitutesHeader.visibility = View.VISIBLE
         binding.substitutesRecyclerView.visibility = View.VISIBLE
-        binding.btnAddToSubstitutes.visibility = View.VISIBLE
+        binding.btnAddToSubstitutes.visibility = if (isAdmin) View.VISIBLE else View.GONE
 
         binding.eventsHeader.visibility = View.VISIBLE
         binding.eventsRecyclerView.visibility = View.VISIBLE
-        binding.btnAddEvent.visibility = View.VISIBLE
+        binding.btnAddEvent.visibility = if (isAdmin) View.VISIBLE else View.GONE
     }
 
+    @SuppressLint("SetTextI18n")
     private fun showAddPlayerDialog(isStarting: Boolean) {
         val dialogView = layoutInflater.inflate(R.layout.dialog_add_player_to_match, null)
         val playerSpinner = dialogView.findViewById<Spinner>(R.id.spinnerPlayer)
         val minutesInEditText = dialogView.findViewById<EditText>(R.id.etMinutesIn)
         val minutesOutEditText = dialogView.findViewById<EditText>(R.id.etMinutesOut)
 
-        // Vytvoríme zoznam hráčov pre spinner
+        val playersNotInLineup = allPlayers.filter { player ->
+            val isInStartingLineup = matchDetail.startingLineup.any { it.player.id == player.id }
+            val isInSubstitutes = matchDetail.substitutes.any { it.player.id == player.id }
+            !(isInStartingLineup || isInSubstitutes)
+        }
+
+
+        if (playersNotInLineup.isEmpty()) {
+            Toast.makeText(requireContext(), "Všetci hráči sú už v zostave", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        // Setup player spinner
         val playerAdapter = ArrayAdapter(
             requireContext(),
             android.R.layout.simple_spinner_item,
-            allPlayers.map { "${it.firstName} ${it.lastName} (${it.numberOfShirt})" }
+            playersNotInLineup.map { "${it.firstName} ${it.lastName} (${it.numberOfShirt})" }
         )
         playerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         playerSpinner.adapter = playerAdapter
+
+        // Set default values based on player type
+        if (isStarting) {
+            minutesInEditText.setText(MATCH_START_MINUTE.toString())
+            minutesOutEditText.setText(MATCH_END_MINUTE.toString())
+        }
 
         AlertDialog.Builder(requireContext())
             .setTitle(if (isStarting) "Pridať hráča do základnej zostavy" else "Pridať náhradníka")
@@ -166,20 +191,24 @@ class MatchDetailsFragment : Fragment() {
             .setPositiveButton("Pridať") { _, _ ->
                 val selectedPlayerIndex = playerSpinner.selectedItemPosition
                 if (selectedPlayerIndex != -1) {
-                    val selectedPlayer = allPlayers[selectedPlayerIndex]
+                    val selectedPlayer = playersNotInLineup[selectedPlayerIndex]
 
+                    // Handle minutes logic
                     var minutesIn = minutesInEditText.text.toString().toIntOrNull()
                     var minutesOut = minutesOutEditText.text.toString().toIntOrNull()
 
-
+                    // Handle default values for minutes
                     if (isStarting) {
+                        // For starting players, default is 0-90
                         minutesIn = minutesIn ?: MATCH_START_MINUTE
                         minutesOut = minutesOut ?: MATCH_END_MINUTE
                     } else {
+                        // For substitutes
                         minutesIn = minutesIn ?: MATCH_START_MINUTE
                         minutesOut = minutesOut ?: MATCH_END_MINUTE
                     }
 
+                    // Validate minutes
                     if (minutesIn < MATCH_START_MINUTE || minutesIn > MATCH_END_MINUTE ||
                         minutesOut < MATCH_START_MINUTE || minutesOut > MATCH_END_MINUTE ||
                         minutesIn > minutesOut) {
@@ -189,6 +218,7 @@ class MatchDetailsFragment : Fragment() {
                         return@setPositiveButton
                     }
 
+                    // Create a new LineupPlayer object
                     val lineupPlayer = LineupPlayer(
                         matchId = matchId ?: "",
                         playerId = selectedPlayer.id.toString(),
@@ -202,13 +232,14 @@ class MatchDetailsFragment : Fragment() {
                         try {
                             matchRepository.addPlayerToLineup(lineupPlayer)
 
+                            // Create PlayerWithStats object
                             val playerStats = PlayerWithStats(
                                 player = selectedPlayer,
                                 goals = 0,
                                 assists = 0,
                                 yellowCards = 0,
                                 redCards = 0,
-                                minutes = minutesIn,
+                                minutesIn = minutesIn,
                                 minutesOut = minutesOut
                             )
 
@@ -257,13 +288,16 @@ class MatchDetailsFragment : Fragment() {
             playerAssistId = null
         )
 
+        // Save the event to Firestore
         lifecycleScope.launch {
             try {
                 matchRepository.addMatchEvent(newEvent)
 
+                // Find the player for the event
                 val player = allPlayers.find { it.id == playerId }
 
                 if (player != null) {
+                    // Create the event with player object
                     val eventWithPlayer = EventWithPlayer(
                         id = newEvent.id,
                         event = newEvent,
@@ -271,6 +305,7 @@ class MatchDetailsFragment : Fragment() {
                         assistPlayer = null
                     )
 
+                    // Add to the events list
                     val updatedEvents = matchDetail.events.toMutableList()
                     updatedEvents.add(eventWithPlayer)
                     matchDetail.events = updatedEvents
@@ -300,7 +335,6 @@ class MatchDetailsFragment : Fragment() {
             return
         }
 
-
         val playerAdapter = ArrayAdapter(
             requireContext(),
             android.R.layout.simple_spinner_item,
@@ -314,9 +348,9 @@ class MatchDetailsFragment : Fragment() {
         val goalEvents = matchDetail.events.count { it.event.eventType == EventType.GOAL }
         val availableEventTypes = EventType.entries.filter { eventType ->
             if (eventType == EventType.GOAL && goalEvents >= matchDetail.match.ourScore) {
-                false  // Don't allow more goals than the score shows
+                false
             } else if (eventType == EventType.SUBSTITUTION_IN || eventType == EventType.SUBSTITUTION_OUT) {
-                false  // Don't show substitution events as they're added automatically
+                false
             } else {
                 true
             }
@@ -340,8 +374,30 @@ class MatchDetailsFragment : Fragment() {
                 val selectedAssistPlayerIndex = assistPlayerSpinner.selectedItemPosition
 
                 if (selectedPlayerIndex != -1 && selectedEventTypeIndex != -1) {
-                    val selectedPlayer = allPlayers[selectedPlayerIndex]
-                    val eventType = EventType.entries[selectedEventTypeIndex]
+                    // Validate minute value
+                    if (minute < MATCH_START_MINUTE || minute > MATCH_END_MINUTE) {
+                        Toast.makeText(requireContext(),
+                            "Neplatný čas: hodnota musí byť medzi $MATCH_START_MINUTE a $MATCH_END_MINUTE",
+                            Toast.LENGTH_LONG).show()
+                        return@setPositiveButton
+                    }
+
+                    val selectedPlayer = playersInLineup[selectedPlayerIndex]
+                    val eventType = availableEventTypes[selectedEventTypeIndex]
+
+                    // Make sure player was on the field at given minute
+                    val playerInStarting = matchDetail.startingLineup.find { it.player.id == selectedPlayer.id }
+                    val playerInSubstitutes = matchDetail.substitutes.find { it.player.id == selectedPlayer.id }
+
+                    val playerMinutesIn = playerInStarting?.minutesIn ?: playerInSubstitutes?.minutesIn ?: MATCH_START_MINUTE
+                    val playerMinutesOut = playerInStarting?.minutesOut ?: playerInSubstitutes?.minutesOut ?: MATCH_END_MINUTE
+
+                    if (minute < playerMinutesIn || minute > playerMinutesOut) {
+                        Toast.makeText(requireContext(),
+                            "Hráč nebol v danom čase na ihrisku (${playerMinutesIn} - ${playerMinutesOut})",
+                            Toast.LENGTH_LONG).show()
+                        return@setPositiveButton
+                    }
 
                     // Create a new event without passing an ID
                     val newEvent = MatchEvent(
@@ -350,7 +406,7 @@ class MatchDetailsFragment : Fragment() {
                         eventType = eventType,
                         minute = minute,
                         playerAssistId = if (eventType == EventType.GOAL && selectedAssistPlayerIndex != -1)
-                            allPlayers[selectedAssistPlayerIndex].id
+                            playersInLineup[selectedAssistPlayerIndex].id
                         else null
                     )
 
@@ -365,7 +421,7 @@ class MatchDetailsFragment : Fragment() {
                                 event = newEvent,
                                 player = selectedPlayer,
                                 assistPlayer = if (eventType == EventType.GOAL && selectedAssistPlayerIndex != -1)
-                                    allPlayers[selectedAssistPlayerIndex]
+                                    playersInLineup[selectedAssistPlayerIndex]
                                 else null
                             )
 
@@ -375,6 +431,12 @@ class MatchDetailsFragment : Fragment() {
                             eventsAdapter.submitList(updatedEvents)
 
                             updatePlayerStats(selectedPlayer.id.toString(), eventType)
+
+                            // If it's a goal and there's an assist player, update their stats too
+                            if (eventType == EventType.GOAL && selectedAssistPlayerIndex != -1) {
+                                val assistPlayerId = playersInLineup[selectedAssistPlayerIndex].id.toString()
+                                updatePlayerAssistStats(assistPlayerId)
+                            }
 
                             Toast.makeText(requireContext(), "Event pridaný", Toast.LENGTH_SHORT).show()
                         } catch (e: Exception) {
@@ -424,6 +486,22 @@ class MatchDetailsFragment : Fragment() {
                 }
             }
             else -> {}
+        }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun updatePlayerAssistStats(playerId: String) {
+        val playerInStarting = matchDetail.startingLineup.find { it.player.id == playerId }
+        val playerInSubstitutes = matchDetail.substitutes.find { it.player.id == playerId }
+
+        playerInStarting?.let {
+            it.assists++
+            startingLineupAdapter.notifyDataSetChanged()
+        }
+
+        playerInSubstitutes?.let {
+            it.assists++
+            substitutesAdapter.notifyDataSetChanged()
         }
     }
 

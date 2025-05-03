@@ -1,4 +1,4 @@
-package com.example.tmasemestralnapraca.matches.matchEvent
+package com.example.tmasemestralnapraca.matches
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -8,44 +8,23 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tmasemestralnapraca.databinding.MatchEventItemBinding
+import com.example.tmasemestralnapraca.matches.matchEvent.EventType
+import com.example.tmasemestralnapraca.matches.matchEvent.EventWithPlayer
 
-@Suppress("DEPRECATION")
-class MatchEventAdapter(private val listener: MatchEventDetailsFragment,
-                        private val isAdmin: Boolean) :
-    ListAdapter<EventWithPlayer, MatchEventAdapter.MatchEventViewHolder>(EventDiffCallback()) {
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MatchEventViewHolder {
-        val binding = MatchEventItemBinding.inflate(
-            LayoutInflater.from(parent.context),
-            parent,
-            false
-        )
-        return MatchEventViewHolder(binding)
-    }
-
-    override fun onBindViewHolder(holder: MatchEventViewHolder, position: Int) {
-        val currentPlayer = getItem(position)
-        holder.bind(currentPlayer)
-    }
-
-    inner class MatchEventViewHolder(private val binding: MatchEventItemBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-
-        init {
-            binding.deleteBtn.setOnClickListener {
-                val position = adapterPosition
-                if (position != RecyclerView.NO_POSITION) {
-                    listener.onDeletePlayerClick(getItem(position))
-                }
-            }
-
-            binding.editBtn.setOnClickListener {
-                val position = adapterPosition
-                if (position != RecyclerView.NO_POSITION) {
-                    listener.onEditPlayerClick(getItem(position))
-                }
-            }
+class MatchEventAdapter : ListAdapter<EventWithPlayer, MatchEventAdapter.ViewHolder>(
+    object : DiffUtil.ItemCallback<EventWithPlayer>() {
+        override fun areItemsTheSame(oldItem: EventWithPlayer, newItem: EventWithPlayer): Boolean {
+            return oldItem.event.id == newItem.event.id
         }
+
+        override fun areContentsTheSame(oldItem: EventWithPlayer, newItem: EventWithPlayer): Boolean {
+            return oldItem == newItem
+        }
+    }
+) {
+
+    class ViewHolder(private val binding: MatchEventItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         @SuppressLint("SetTextI18n")
         fun bind(eventWithPlayer: EventWithPlayer) {
@@ -54,11 +33,9 @@ class MatchEventAdapter(private val listener: MatchEventDetailsFragment,
             binding.textViewAssistBy.visibility = View.GONE
 
             val event = eventWithPlayer.event
-            val player = eventWithPlayer.player
 
 
             binding.eventTimeTv.text = "${event.minute}′"
-            binding.fullNameTv.text = "${player.firstName} ${player.lastName}"
 
             val iconText = when (event.eventType) {
                 EventType.GOAL -> "⚽"
@@ -73,8 +50,7 @@ class MatchEventAdapter(private val listener: MatchEventDetailsFragment,
                 binding.bootTextView.visibility = View.VISIBLE
                 binding.textViewAssistBy.visibility = View.VISIBLE
 
-                binding.textViewAssistBy.text =
-                    eventWithPlayer.assistPlayer.firstName + " " + eventWithPlayer.assistPlayer.lastName
+                binding.textViewAssistBy.text = eventWithPlayer.assistPlayer.firstName + " " + eventWithPlayer.assistPlayer.lastName
             } else {
                 binding.bootTextView.visibility = View.GONE
                 binding.textViewAssistBy.visibility = View.GONE
@@ -82,20 +58,14 @@ class MatchEventAdapter(private val listener: MatchEventDetailsFragment,
         }
     }
 
-
-    interface MatchEventClickListener {
-        fun onEditPlayerClick(eventWithPlayer: EventWithPlayer)
-        fun onDeletePlayerClick(eventWithPlayer: EventWithPlayer)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val binding = MatchEventItemBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
+        )
+        return ViewHolder(binding)
     }
 
-    class EventDiffCallback : DiffUtil.ItemCallback<EventWithPlayer>() {
-        override fun areItemsTheSame(oldItem: EventWithPlayer, newItem: EventWithPlayer): Boolean {
-            return oldItem.id == newItem.id
-        }
-
-        override fun areContentsTheSame(oldItem: EventWithPlayer, newItem: EventWithPlayer): Boolean {
-            return oldItem == newItem
-        }
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.bind(getItem(position))
     }
-
 }

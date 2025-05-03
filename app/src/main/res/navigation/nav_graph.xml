@@ -48,14 +48,13 @@
         android:label="Zápasy"
         tools:layout="@layout/fragment_match" >
         <action
-            android:id="@+id/action_matchFragment_to_matchEventDetailsFragment"
-            app:destination="@id/matchEventDetailsFragment" />
+            android:id="@+id/action_matchFragment_to_matchDetailsFragment"
+            app:destination="@id/matchDetailsFragment" />
     </fragment>
     <fragment
-        android:id="@+id/matchEventDetailsFragment"
-        android:name="com.example.tmasemestralnapraca.matches.matchEvent.MatchEventDetailsFragment"
-        android:label="fragment_match_event_details"
-        tools:layout="@layout/fragment_match_event_details">
+        android:id="@+id/matchDetailsFragment"
+        android:name="com.example.tmasemestralnapraca.matches.MatchDetailsFragment"
+        android:label="MatchDetailsFragment" >
         <argument
             android:name="match_id"
             app:argType="string" />

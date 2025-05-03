@@ -1,6 +1,11 @@
 package com.example.tmasemestralnapraca.matches
 
 import android.util.Log
+import com.example.tmasemestralnapraca.matches.matchEvent.EventType
+import com.example.tmasemestralnapraca.matches.matchEvent.EventWithPlayer
+import com.example.tmasemestralnapraca.matches.matchEvent.MatchEvent
+import com.example.tmasemestralnapraca.matches.matchLineup.LineupPlayer
+import com.example.tmasemestralnapraca.matches.matchLineup.PlayerWithStats
 import com.example.tmasemestralnapraca.player.PlayerModel
 import com.example.tmasemestralnapraca.teams.TeamRepository
 import com.google.firebase.firestore.FirebaseFirestore
