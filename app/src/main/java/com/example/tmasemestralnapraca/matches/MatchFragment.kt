@@ -84,12 +84,10 @@ class MatchFragment : Fragment(), AddEditMatchFragment.AddEditMatchListener,
     }
 
     private fun updateFilterButtonState() {
-        // Reset all buttons to default state
         binding.buttonAllMatches.alpha = 0.7f
         binding.buttonPlayedMatches.alpha = 0.7f
         binding.buttonUnplayedMatches.alpha = 0.7f
 
-        // Highlight the selected button
         when (currentFilter) {
             "All" -> binding.buttonAllMatches.alpha = 1.0f
             "Played" -> binding.buttonPlayedMatches.alpha = 1.0f
@@ -161,7 +159,7 @@ class MatchFragment : Fragment(), AddEditMatchFragment.AddEditMatchListener,
         lifecycleScope.launch(Dispatchers.IO) {
             matchRepository.deleteMatch(match.id.toString())
         }
-        Toast.makeText(requireContext(), "Match was successfully deleted!", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), "Zápas bol úspešne odstranený!", Toast.LENGTH_SHORT).show()
     }
 
     override fun onDestroyView() {

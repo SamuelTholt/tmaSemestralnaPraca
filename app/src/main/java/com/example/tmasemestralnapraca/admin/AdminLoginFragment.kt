@@ -46,7 +46,7 @@ class AdminLoginFragment : Fragment() {
             if (email.isNotEmpty() && password.isNotEmpty()) {
                 loginAdmin(email, password)
             } else {
-                Toast.makeText(requireContext(), "Fill in all fields", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Vyplňte všetky polia!", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -65,14 +65,14 @@ class AdminLoginFragment : Fragment() {
                     val sharedPref = requireContext().getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
                     sharedPref.edit().putBoolean("isAdminLoggedIn", true).apply()
 
-                    Toast.makeText(requireContext(), "Login successful!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Úspešné prihlásenie!", Toast.LENGTH_SHORT).show()
                     (activity as? MainActivity)?.reloadNavigationMenu()
                     findNavController().navigateUp()
                 } else {
-                    Toast.makeText(requireContext(), "Incorrect password", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Nesprávne heslo", Toast.LENGTH_SHORT).show()
                 }
             } else {
-                Toast.makeText(requireContext(), "Admin not found", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Admin nebol nájdený!", Toast.LENGTH_SHORT).show()
             }
         }
     }

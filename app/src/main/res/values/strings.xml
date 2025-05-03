@@ -41,4 +41,16 @@
     <string name="isPlayedHome">Doma?</string>
     <string name="matches">Zápasy</string>
     <string name="matchTime">Čas zápasu</string>
+    <string name="detaily_zapasu">Detaily zápasu</string>
+    <string name="back">Back</string>
+    <string name="lokacia">Lokácia</string>
+    <string name="stav_zapasu">3 : 2</string>
+    <string name="date_time">15.05.2025 14:00</string>
+    <string name="doma">Doma</string>
+    <string name="zakladna_11">Základná zostava</string>
+    <string name="nahradnici">Náhradníci</string>
+    <string name="prehlad_zapasu">Prehľad zápasu</string>
+    <string name="pridat_hraca_do_zakladnej_zostavy">Pridať hráča do základnej zostavy</string>
+    <string name="pridat_nahradnika">Pridať náhradníka</string>
+    <string name="pridat_event">Pridať event</string>
 </resources>
