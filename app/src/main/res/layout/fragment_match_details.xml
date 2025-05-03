@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bck_color_1B2223"
-    tools:context=".matches.matchEvent.MatchDetailsFragment">
+    tools:context=".matches.MatchDetailsFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -141,6 +141,33 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
+        <Button
+            android:id="@+id/btnAddEvent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="@color/color0ef6cc"
+            android:text="@string/pridat_event"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/btnAddToStartingLineup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="@color/color0ef6cc"
+            android:text="@string/pridat_hraca_do_zakladnej_zostavy"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/btnAddToSubstitutes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="@color/color0ef6cc"
+            android:text="@string/pridat_nahradnika"
+            android:textColor="@color/black" />
+
         <TextView
             android:id="@+id/eventsHeader"
             android:layout_width="match_parent"
@@ -151,93 +178,51 @@
             android:text="@string/prehlad_zapasu"
             android:textColor="@color/black"
             android:textSize="18sp"
-            android:textStyle="bold"
-            android:visibility="gone"
-            tools:visibility="visible" />
+            android:textStyle="bold" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/eventsRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            tools:visibility="visible"
+            android:layout_height="80dp"
+            tools:itemCount="3"
             tools:listitem="@layout/match_event_item" />
-
-        <Button
-            android:id="@+id/btnAddEvent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/pridat_event"
-            android:textColor="@color/black"
-            android:backgroundTint="@color/color0ef6cc"
-            android:visibility="gone"
-            tools:visibility="visible" />
 
         <TextView
             android:id="@+id/startingLineupHeader"
-            android:background="@drawable/yellow_rounded_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
+            android:background="@drawable/yellow_rounded_edit_text"
             android:text="@string/zakladna_11"
             android:textColor="@color/black"
             android:textSize="18sp"
-            android:textStyle="bold"
-            android:visibility="gone"
-            tools:visibility="visible" />
+            android:textStyle="bold" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/startingLineupRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            tools:visibility="visible"
+            android:layout_height="80dp"
+            tools:itemCount="3"
             tools:listitem="@layout/match_player_item" />
-
-        <Button
-            android:id="@+id/btnAddToStartingLineup"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:textColor="@color/black"
-            android:backgroundTint="@color/color0ef6cc"
-            android:text="@string/pridat_hraca_do_zakladnej_zostavy"
-            android:visibility="gone"
-            tools:visibility="visible" />
 
         <!-- Substitutes Section -->
         <TextView
             android:id="@+id/substitutesHeader"
-            android:background="@drawable/yellow_rounded_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:textColor="@color/black"
+            android:background="@drawable/yellow_rounded_edit_text"
             android:text="@string/nahradnici"
+            android:textColor="@color/black"
             android:textSize="18sp"
-            android:textStyle="bold"
-            android:visibility="gone"
-            tools:visibility="visible" />
+            android:textStyle="bold" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/substitutesRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            tools:visibility="visible"
+            android:layout_height="80dp"
+            tools:itemCount="3"
             tools:listitem="@layout/match_player_item" />
-
-        <Button
-            android:id="@+id/btnAddToSubstitutes"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:textColor="@color/black"
-            android:backgroundTint="@color/color0ef6cc"
-            android:text="@string/pridat_nahradnika"
-            android:visibility="gone"
-            tools:visibility="visible" />
 
 
     </LinearLayout>

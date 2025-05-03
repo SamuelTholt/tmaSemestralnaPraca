@@ -39,6 +39,7 @@
         android:clipToPadding="false"
         android:paddingTop="10dp"
         android:paddingBottom="150dp"
+        tools:itemCount="3"
         tools:listitem="@layout/player_item" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

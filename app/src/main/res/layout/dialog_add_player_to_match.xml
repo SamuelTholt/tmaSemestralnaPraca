@@ -9,8 +9,8 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Vybrať hráča"
-        android:textSize="16sp"
+        android:text="Vyberte hráča"
+        android:textStyle="bold"
         android:layout_marginBottom="8dp"
         tools:ignore="HardcodedText" />
 
@@ -22,43 +22,82 @@
         android:minHeight="48dp" />
 
     <LinearLayout
+        android:id="@+id/substituteForLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Striedanie za hráča"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"
+            tools:ignore="HardcodedText" />
+
+        <Spinner
+            android:id="@+id/spinnerSubstituteFor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp" />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_marginBottom="16dp"
         tools:ignore="DisableBaselineAlignment">
 
-        <com.google.android.material.textfield.TextInputLayout
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_marginEnd="8dp"
-            android:hint="Vstúpil (minúta)"
-            tools:ignore="HardcodedText">
+            android:orientation="vertical"
+            android:layout_marginEnd="8dp">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Čas vstupu (minúta)"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp"
+                tools:ignore="HardcodedText" />
+
+            <EditText
                 android:id="@+id/etMinutesIn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint="0"
                 android:inputType="number"
-                android:textColorHint="#546E7A"
-                tools:ignore="VisualLintTextFieldSize,TextContrastCheck" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:minHeight="48dp"
+                tools:ignore="Autofill,HardcodedText,VisualLintTextFieldSize" />
+        </LinearLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_marginStart="8dp"
-            android:hint="Vystúpil (minúta)"
-            tools:ignore="HardcodedText">
+            android:orientation="vertical"
+            android:layout_marginStart="8dp">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Čas výstupu (minúta)"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp"
+                tools:ignore="HardcodedText" />
+
+            <EditText
                 android:id="@+id/etMinutesOut"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint="90"
                 android:inputType="number"
-                android:textColorHint="#546E7A"
-                tools:ignore="TextContrastCheck,VisualLintTextFieldSize" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:minHeight="48dp"
+                tools:ignore="Autofill,HardcodedText,VisualLintTextFieldSize" />
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

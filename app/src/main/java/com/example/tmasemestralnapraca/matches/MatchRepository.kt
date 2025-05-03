@@ -345,4 +345,36 @@ class MatchRepository {
         awaitClose { subscription.remove() }
     }
 
+    suspend fun updatePlayerInLineup(lineupPlayer: LineupPlayer): Boolean {
+        return try {
+            val db = FirebaseFirestore.getInstance()
+            val matchLineupCollection = db.collection("match_lineups")
+
+            val querySnapshot = matchLineupCollection
+                .whereEqualTo("matchId", lineupPlayer.matchId)
+                .whereEqualTo("playerId", lineupPlayer.playerId)
+                .get()
+                .await()
+
+            if (!querySnapshot.isEmpty) {
+                val documentId = querySnapshot.documents[0].id
+
+                matchLineupCollection.document(documentId)
+                    .update(
+                        mapOf(
+                            "minutesIn" to lineupPlayer.minutesIn,
+                            "minutesOut" to lineupPlayer.minutesOut
+                        )
+                    )
+                    .await()
+                true
+            } else {
+                false
+            }
+        } catch (e: Exception) {
+            Log.e("MatchRepository", "Error updating player in lineup: ${e.message}")
+            false
+        }
+    }
+
 }
