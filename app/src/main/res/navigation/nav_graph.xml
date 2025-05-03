@@ -46,6 +46,19 @@
         android:id="@+id/matchFragment"
         android:name="com.example.tmasemestralnapraca.matches.MatchFragment"
         android:label="Zápasy"
-        tools:layout="@layout/fragment_match" />
+        tools:layout="@layout/fragment_match" >
+        <action
+            android:id="@+id/action_matchFragment_to_matchDetailsFragment"
+            app:destination="@id/matchDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/matchDetailsFragment"
+        android:name="com.example.tmasemestralnapraca.matches.MatchDetailsFragment"
+        android:label="Detaily zápasu"
+        tools:layout="@layout/fragment_match_details">
+        <argument
+            android:name="match_id"
+            app:argType="string" />
+    </fragment>
 
 </navigation>

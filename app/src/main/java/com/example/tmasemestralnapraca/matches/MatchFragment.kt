@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tmasemestralnapraca.databinding.FragmentMatchBinding
 import com.google.firebase.firestore.Query
@@ -138,9 +139,9 @@ class MatchFragment : Fragment(), AddEditMatchFragment.AddEditMatchListener,
     override fun onSaveBtnClicked(isUpdate: Boolean, match: MatchModel) {
         lifecycleScope.launch(Dispatchers.IO) {
             if (isUpdate)
-                matchRepository.updateMatch(match.id!!, match)
+                matchRepository.updateMatch(match)
             else
-                matchRepository.createMatch(match)
+                matchRepository.saveMatch(match)
         }
         if (isUpdate)
             Toast.makeText(requireContext(), "Zápas bol úspešne upravený!", Toast.LENGTH_SHORT).show()
@@ -157,7 +158,7 @@ class MatchFragment : Fragment(), AddEditMatchFragment.AddEditMatchListener,
 
     override fun onDeleteMatchClick(match: MatchModel) {
         lifecycleScope.launch(Dispatchers.IO) {
-            matchRepository.deleteMatch(match.id.toString())
+            matchRepository.deleteMatchById(match.id.toString())
         }
         Toast.makeText(requireContext(), "Zápas bol úspešne odstranený!", Toast.LENGTH_SHORT).show()
     }

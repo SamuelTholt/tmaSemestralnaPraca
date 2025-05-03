@@ -18,7 +18,7 @@
 
 
         <TextView
-            android:id="@+id/numberOfShirtTextView"
+            android:id="@+id/eventTimeTv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="90'"
@@ -26,7 +26,7 @@
             android:textColor="@color/color_white_f4fefd"
             android:textSize="14sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/guideline9"
             app:layout_constraintEnd_toStartOf="@+id/guideline"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -56,7 +56,7 @@
             android:text="John Doe"
             android:textColor="@color/color_white_f4fefd"
             android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/guideline9"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
             app:layout_constraintStart_toStartOf="@+id/guideline4"
             app:layout_constraintTop_toTopOf="parent"
@@ -71,7 +71,7 @@
             android:textAlignment="center"
             android:textColor="@color/color_white_f4fefd"
             android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/guideline9"
             app:layout_constraintEnd_toStartOf="@+id/guideline4"
             app:layout_constraintStart_toStartOf="@+id/guideline"
             app:layout_constraintTop_toTopOf="parent"
@@ -103,6 +103,39 @@
             app:layout_constraintTop_toBottomOf="@+id/editBtn"
             app:srcCompat="@android:drawable/ic_menu_delete"
             tools:ignore="ContentDescription" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.71" />
+
+        <TextView
+            android:id="@+id/bootTextView"
+            android:layout_width="25dp"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:text="👟"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline4"
+            app:layout_constraintTop_toBottomOf="@id/guideline9"
+            tools:ignore="HardcodedText,SmallSp,TextContrastCheck" />
+
+        <TextView
+            android:id="@+id/textViewAssistBy"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center|start"
+            android:text="Doe John"
+            android:textColor="@color/color_white_f4fefd"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintStart_toEndOf="@+id/bootTextView"
+            app:layout_constraintTop_toTopOf="@+id/guideline9"
+            tools:ignore="HardcodedText,SmallSp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -83,6 +83,7 @@ class MatchAdapter(private val listener: MatchClickListener,
 
 
             val ourTeamName = "Náš tím"
+            val ourLogo = com.example.tmasemestralnapraca.R.drawable.goal_icon
 
             if (match.playedHome) {
                 binding.homeTeamViewTv.text = ourTeamName
@@ -93,6 +94,8 @@ class MatchAdapter(private val listener: MatchClickListener,
                     .load(match.opponentLogo)
                     .centerCrop()
                     .into(binding.imgIconAwayTeam)
+
+                binding.imgIconHomeTeam.setImageResource(ourLogo)
 
                 if (match.played) {
                     binding.homeTeamScoreTv.text = match.ourScore.toString()
@@ -105,12 +108,14 @@ class MatchAdapter(private val listener: MatchClickListener,
             } else {
                 binding.homeTeamViewTv.text = match.opponentName
                 binding.awayTeamTv.text = ourTeamName
-                binding.homeAway.text = "Vonku"
+                binding.homeAway.text = "Von"
 
                 Glide.with(binding.root.context)
                     .load(match.opponentLogo)
                     .centerCrop()
                     .into(binding.imgIconHomeTeam)
+
+                binding.imgIconAwayTeam.setImageResource(ourLogo)
 
                 if (match.played) {
                     binding.homeTeamScoreTv.text = match.opponentScore.toString()

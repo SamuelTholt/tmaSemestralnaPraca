@@ -1,11 +1,14 @@
 package com.example.tmasemestralnapraca.player
 
+import com.example.tmasemestralnapraca.teams.TeamModel
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 
 class PlayerRepository {
     private val firestore = FirebaseFirestore.getInstance()
@@ -54,6 +57,15 @@ class PlayerRepository {
         }
 
         awaitClose { subscription.remove() }
+    }
+
+    suspend fun getPlayers(): List<PlayerModel> = withContext(Dispatchers.IO) {
+        val snapshot = playersCollection.get().await()
+        val players = snapshot.documents.mapNotNull {
+            it.toObject(PlayerModel::class.java)?.apply { id = it.id }
+        }
+
+        return@withContext players
     }
 
     suspend fun getPlayerById(id: String): PlayerModel? {

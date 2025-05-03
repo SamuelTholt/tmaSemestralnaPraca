@@ -2,7 +2,6 @@ package com.example.tmasemestralnapraca.matches
 
 import android.util.Log
 import com.example.tmasemestralnapraca.player.PlayerModel
-import com.example.tmasemestralnapraca.post.PostModel
 import com.example.tmasemestralnapraca.teams.TeamRepository
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
@@ -18,10 +17,49 @@ class MatchRepository {
     private val matchesCollection = db.collection("matches")
     private val playersCollection = db.collection("players")
     private val lineupCollection = db.collection("lineups")
-    private val eventsCollection = db.collection("match_events")
+    private val eventsCollection = db.collection("events")
 
-    // Získať detail zápasu vrátane zostavy a udalostí
-    suspend fun getMatchDetail(matchId: String): MatchDetail = withContext(Dispatchers.IO) {
+
+    suspend fun saveMatch(match: MatchModel) {
+        val newMatch = match.copy()
+        if (newMatch.id == null) {
+            val documentRef = matchesCollection.document()
+            newMatch.id = documentRef.id
+            documentRef.set(newMatch).await()
+        } else {
+            matchesCollection.document(newMatch.id!!).set(newMatch).await()
+        }
+    }
+
+    suspend fun updateMatch(match: MatchModel) {
+        match.id?.let { id ->
+            matchesCollection.document(id).set(match).await()
+        }
+    }
+
+
+    suspend fun deleteMatchById(matchId: String) {
+        try {
+            val lineupSnapshot = lineupCollection.whereEqualTo("matchId", matchId).get().await()
+            for (document in lineupSnapshot.documents) {
+                document.reference.delete().await()
+            }
+
+            val eventsSnapshot = eventsCollection.whereEqualTo("matchId", matchId).get().await()
+            for (document in eventsSnapshot.documents) {
+                document.reference.delete().await()
+            }
+
+            matchesCollection.document(matchId).delete().await()
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+
+
+    suspend fun getMatchDetailById(matchId: String): MatchDetail {
         // Získať zápas
         val matchDoc = matchesCollection.document(matchId).get().await()
         val match = matchDoc.toObject(MatchModel::class.java) ?: MatchModel()
@@ -104,7 +142,7 @@ class MatchRepository {
             )
         }.sortedBy { it.event.minute }
 
-        return@withContext MatchDetail(
+        return MatchDetail(
             match = match,
             startingLineup = startingLineup,
             substitutes = substitutes,
@@ -113,15 +151,27 @@ class MatchRepository {
     }
 
     // Pridať hráča do zostavy
-    suspend fun addPlayerToLineup(lineupPlayer: LineupPlayer): String = withContext(Dispatchers.IO) {
-        val docRef = lineupCollection.add(lineupPlayer).await()
-        return@withContext docRef.id
+    suspend fun addPlayerToLineup(lineupPlayer: LineupPlayer) {
+        val newLineupPlayer = lineupPlayer.copy()
+        if (newLineupPlayer.id == null) {
+            val documentRef = playersCollection.document()
+            newLineupPlayer.id = documentRef.id
+            documentRef.set(newLineupPlayer).await()
+        } else {
+            lineupCollection.document(newLineupPlayer.id!!).set(newLineupPlayer).await()
+        }
     }
 
     // Pridať udalosť do zápasu
-    suspend fun addMatchEvent(event: MatchEvent): String = withContext(Dispatchers.IO) {
-        val docRef = eventsCollection.add(event).await()
-        return@withContext docRef.id
+    suspend fun addMatchEvent(event: MatchEvent) {
+        val newEvent = event.copy()
+        if (newEvent.id == null) {
+            val documentRef = playersCollection.document()
+            newEvent.id = documentRef.id
+            documentRef.set(newEvent).await()
+        } else {
+            eventsCollection.document(newEvent.id!!).set(newEvent).await()
+        }
     }
 
     // Vymazať hráča zo zostavy
@@ -137,32 +187,6 @@ class MatchRepository {
         }
     }
 
-    // Vymazať zápas a všetky súvisiace dáta (zostava, udalosti)
-    suspend fun deleteMatch(matchId: String): Boolean = withContext(Dispatchers.IO) {
-        try {
-            // 1. Vymazať všetkých hráčov zo zostavy pre daný zápas
-            val lineupSnapshot = lineupCollection.whereEqualTo("matchId", matchId).get().await()
-            for (document in lineupSnapshot.documents) {
-                document.reference.delete().await()
-            }
-
-            // 2. Vymazať všetky udalosti spojené so zápasom
-            val eventsSnapshot = eventsCollection.whereEqualTo("matchId", matchId).get().await()
-            for (document in eventsSnapshot.documents) {
-                document.reference.delete().await()
-            }
-
-            // 3. Nakoniec vymazať samotný zápas
-            matchesCollection.document(matchId).delete().await()
-
-            return@withContext true
-        } catch (e: Exception) {
-            e.printStackTrace()
-            return@withContext false
-        }
-    }
-
-
     // Získať všetky zápasy
     suspend fun getAllMatches(): List<MatchModel> = withContext(Dispatchers.IO) {
         val snapshot = matchesCollection.get().await()
@@ -172,24 +196,6 @@ class MatchRepository {
 
         return@withContext matches
     }
-
-    //Vytvorenie zápasu
-    suspend fun createMatch(match: MatchModel): String = withContext(Dispatchers.IO) {
-        val docRef = matchesCollection.add(match).await()
-        return@withContext docRef.id
-    }
-
-    // Update-ovanie zápasu
-    suspend fun updateMatch(matchId: String, match: MatchModel): Boolean = withContext(Dispatchers.IO) {
-        try {
-            matchesCollection.document(matchId).set(match).await()
-            return@withContext true
-        } catch (e: Exception) {
-            e.printStackTrace()
-            return@withContext false
-        }
-    }
-
     //
     suspend fun getMatchWithTeamDetails(matchId: String): MatchModel? = withContext(Dispatchers.IO) {
         val matchDoc = matchesCollection.document(matchId).get().await()
@@ -300,84 +306,6 @@ class MatchRepository {
                 trySend(matches)
             }
         }
-
-        awaitClose { subscription.remove() }
-    }
-
-    fun getPlayedMatches(): Flow<List<MatchModel>> = callbackFlow {
-        val subscription = matchesCollection
-            .whereEqualTo("played", true)
-            .addSnapshotListener { snapshot, error ->
-                if (error != null) {
-                    close(error)
-                    return@addSnapshotListener
-                }
-
-                if (snapshot != null) {
-                    val matches = snapshot.documents.mapNotNull { doc ->
-                        doc.toObject(MatchModel::class.java)?.copy(id = doc.id)
-                    }
-                    trySend(matches)
-                }
-            }
-
-        awaitClose { subscription.remove() }
-    }
-
-    fun getUpcomingMatches(): Flow<List<MatchModel>> = callbackFlow {
-        val subscription = matchesCollection
-            .whereEqualTo("played", false)
-            .addSnapshotListener { snapshot, error ->
-                if (error != null) {
-                    close(error)
-                    return@addSnapshotListener
-                }
-
-                if (snapshot != null) {
-                    val matches = snapshot.documents.mapNotNull { doc ->
-                        doc.toObject(MatchModel::class.java)?.copy(id = doc.id)
-                    }
-                    trySend(matches)
-                }
-            }
-
-        awaitClose { subscription.remove() }
-    }
-
-    fun getMatchSortedByDateAsc(): Flow<List<MatchModel>> = callbackFlow {
-        val subscription = matchesCollection.orderBy("date", Query.Direction.ASCENDING)
-            .addSnapshotListener { snapshot, error ->
-                if (error != null) {
-                    close(error)
-                    return@addSnapshotListener
-                }
-
-                if (snapshot != null) {
-                    val matches = snapshot.documents.mapNotNull { doc ->
-                        doc.toObject(MatchModel::class.java)?.copy(id = doc.id)
-                    }
-                    trySend(matches)
-                }
-            }
-
-        awaitClose { subscription.remove() }
-    }
-
-    fun getMatchSortedByDateDesc(): Flow<List<MatchModel>> = callbackFlow {
-        val subscription = matchesCollection.orderBy("date", Query.Direction.DESCENDING)
-            .addSnapshotListener { snapshot, error ->
-                if (error != null) {
-                    close(error)
-                    return@addSnapshotListener
-                }
-
-                if (snapshot != null) {
-                    val matches = snapshot.documents.mapNotNull { doc ->
-                        doc.toObject(MatchModel::class.java)?.copy(id = doc.id)
-                    }
-                    trySend(matches)
-                }
-            }
 
         awaitClose { subscription.remove() }
     }
