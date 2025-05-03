@@ -54,9 +54,11 @@ class MatchEventAdapter(private val listener: MatchEventDetailsFragment,
             binding.textViewAssistBy.visibility = View.GONE
 
             val event = eventWithPlayer.event
+            val player = eventWithPlayer.player
 
 
             binding.eventTimeTv.text = "${event.minute}′"
+            binding.fullNameTv.text = "${player.firstName} ${player.lastName}"
 
             val iconText = when (event.eventType) {
                 EventType.GOAL -> "⚽"

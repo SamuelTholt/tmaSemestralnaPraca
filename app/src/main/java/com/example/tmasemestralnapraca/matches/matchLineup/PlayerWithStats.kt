@@ -8,6 +8,6 @@ data class PlayerWithStats(
     val assists: Int = 0,
     var yellowCards: Int = 0,
     var redCards: Int = 0,
-    val minutesIn: Int? = null,  // kedy prišiel na ihrisko
+    val minutes: Int? = null,  // kedy prišiel na ihrisko
     val minutesOut: Int? = null  // kedy odišiel z ihriska
 )

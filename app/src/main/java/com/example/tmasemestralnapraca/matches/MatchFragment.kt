@@ -150,11 +150,9 @@ class MatchFragment : Fragment(), AddEditMatchFragment.AddEditMatchListener,
             Toast.makeText(requireContext(), "Zápas bol úspešne pridaný!", Toast.LENGTH_SHORT).show()
     }
 
-    override fun onInfoMatchClick(match: MatchModel) {
-        //Toast.makeText(requireContext(), "Klikol si na info!", Toast.LENGTH_SHORT).show()
-        val action = MatchFragmentDirections.actionMatchFragmentToMatchEventDetailsFragment(match.id.toString())
+    override fun onMatchClick(match: MatchModel) {
+        val action = MatchFragmentDirections.actionMatchFragmentToMatchDetailsFragment(match.id.toString())
         findNavController().navigate(action)
-
     }
 
     override fun onEditMatchClick(match: MatchModel) {
