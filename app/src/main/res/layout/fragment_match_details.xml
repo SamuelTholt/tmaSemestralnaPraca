@@ -150,6 +150,15 @@
             android:text="@string/pridat_event"
             android:textColor="@color/black" />
 
+        <Button
+            android:id="@+id/btnImportStats"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="@color/color0ef6cc"
+            android:text="@string/importovat_statistiky"
+            android:textColor="@color/black" />
+
         <TextView
             android:id="@+id/eventsHeader"
             android:layout_width="match_parent"

@@ -55,4 +55,5 @@
     <string name="pridat_event">Pridať event</string>
     <string name="zostava">Zostava</string>
     <string name="minute">Minúta</string>
+    <string name="importovat_statistiky">Importovať štatistiky do súpisky</string>
 </resources>

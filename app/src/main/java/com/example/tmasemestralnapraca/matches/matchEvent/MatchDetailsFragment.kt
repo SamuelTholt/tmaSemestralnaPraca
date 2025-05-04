@@ -66,8 +66,10 @@ class MatchDetailsFragment : Fragment() {
 
         initRecyclerView()
         setupAddEventButton()
+        setupImportStatsButton()
 
         binding.btnAddEvent.visibility = if (isAdmin) View.VISIBLE else View.GONE
+        binding.btnImportStats.visibility = if (isAdmin) View.VISIBLE else View.GONE
 
         lifecycleScope.launch {
             allPlayers = playerRepository.getPlayers()
@@ -89,6 +91,93 @@ class MatchDetailsFragment : Fragment() {
         }
     }
 
+    private fun setupImportStatsButton() {
+        binding.btnImportStats.setOnClickListener {
+            showImportStatsConfirmationDialog()
+        }
+    }
+
+    private fun showImportStatsConfirmationDialog() {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Importovať štatistiky")
+            .setMessage("Naozaj chcete importovať štatistiky z tohto zápasu do súpisky hráčov? Táto akcia aktualizuje počet gólov, asistencií, žltých a červených kariet všetkých hráčov.")
+            .setPositiveButton("Importovať") { _, _ ->
+                importStatsToRoster()
+            }
+            .setNegativeButton("Zrušiť", null)
+            .show()
+    }
+
+    private fun importStatsToRoster() {
+        lifecycleScope.launch {
+            try {
+                val playerStats = mutableMapOf<String, PlayerStatUpdate>()
+
+                // Collect statistics from events
+                matchDetail.events.forEach { eventWithPlayer ->
+                    val event = eventWithPlayer.event
+                    val playerId = event.playerId
+
+                    // Initialize player stats if not already present
+                    if (!playerStats.containsKey(playerId)) {
+                        playerStats[playerId] = PlayerStatUpdate()
+                    }
+
+                    // Update stats based on event type
+                    when (event.eventType) {
+                        EventType.GOAL -> playerStats[playerId]?.goals = (playerStats[playerId]?.goals ?: 0) + 1
+                        EventType.YELLOW_CARD -> playerStats[playerId]?.yellowCards = (playerStats[playerId]?.yellowCards ?: 0) + 1
+                        EventType.RED_CARD -> playerStats[playerId]?.redCards = (playerStats[playerId]?.redCards ?: 0) + 1
+                    }
+
+                    // Handle assists
+                    event.playerAssistId?.toString()?.let { assistPlayerId ->
+                        if (!playerStats.containsKey(assistPlayerId)) {
+                            playerStats[assistPlayerId] = PlayerStatUpdate()
+                        }
+                        playerStats[assistPlayerId]?.assists = (playerStats[assistPlayerId]?.assists ?: 0) + 1
+                    }
+                }
+
+                // Update players in database
+                var updatedPlayerCount = 0
+                for ((playerId, stats) in playerStats) {
+                    val player = allPlayers.find { it.id.toString() == playerId }
+                    player?.let {
+                        val updatedPlayer = it.copy(
+                            goals = it.goals + stats.goals,
+                            assists = it.assists + stats.assists,
+                            yellowCards = it.yellowCards + stats.yellowCards,
+                            redCards = it.redCards + stats.redCards
+                        )
+                        playerRepository.updatePlayer(updatedPlayer)
+                        updatedPlayerCount++
+                    }
+                }
+
+                Toast.makeText(
+                    requireContext(),
+                    "Štatistiky úspešne importované. Aktualizovaných $updatedPlayerCount hráčov.",
+                    Toast.LENGTH_LONG
+                ).show()
+
+            } catch (e: Exception) {
+                Toast.makeText(
+                    requireContext(),
+                    "Chyba pri importovaní štatistík: ${e.message}",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        }
+    }
+
+    private data class PlayerStatUpdate(
+        var goals: Int = 0,
+        var assists: Int = 0,
+        var yellowCards: Int = 0,
+        var redCards: Int = 0
+    )
+
     private fun initRecyclerView() {
         eventsAdapter = MatchEventAdapter()
 
@@ -98,10 +187,25 @@ class MatchDetailsFragment : Fragment() {
             }
         }
 
+        eventsAdapter.onPlayerClick = { playerId ->
+            navigateToPlayerInfo(playerId)
+        }
+
+        eventsAdapter.onAssistPlayerClick = { assistPlayerId ->
+            navigateToPlayerInfo(assistPlayerId)
+        }
+
         binding.eventsRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = eventsAdapter
         }
+    }
+
+    private fun navigateToPlayerInfo(playerId: String) {
+        val bundle = Bundle().apply {
+            putString("player_id", playerId)
+        }
+        findNavController().navigate(R.id.action_matchDetailsFragment_to_playerInfoFragment, bundle)
     }
 
     private fun showDeleteEventDialog(eventWithPlayer: EventWithPlayer) {

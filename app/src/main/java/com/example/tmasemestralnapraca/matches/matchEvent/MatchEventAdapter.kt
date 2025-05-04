@@ -21,12 +21,15 @@ class MatchEventAdapter : ListAdapter<EventWithPlayer, MatchEventAdapter.ViewHol
     }
 ) {
     var onEventLongClick: ((EventWithPlayer) -> Unit)? = null
+    var onPlayerClick: ((String) -> Unit)? = null
+    var onAssistPlayerClick: ((String) -> Unit)? = null
 
     class ViewHolder(private val binding: MatchEventItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         @SuppressLint("SetTextI18n")
-        fun bind(eventWithPlayer: EventWithPlayer, onLongClick: ((EventWithPlayer) -> Unit)?) {
+        fun bind(eventWithPlayer: EventWithPlayer, onLongClick: ((EventWithPlayer) -> Unit)?,
+                 onPlayerClick: ((String) -> Unit)?, onAssistPlayerClick: ((String) -> Unit)?) {
 
             binding.bootTextView.visibility = View.GONE
             binding.textViewAssistBy.visibility = View.GONE
@@ -49,6 +52,12 @@ class MatchEventAdapter : ListAdapter<EventWithPlayer, MatchEventAdapter.ViewHol
                 binding.textViewAssistBy.visibility = View.VISIBLE
 
                 binding.textViewAssistBy.text = eventWithPlayer.assistPlayer.firstName + " " + eventWithPlayer.assistPlayer.lastName
+
+                binding.textViewAssistBy.setOnClickListener {
+                    eventWithPlayer.assistPlayer.id?.let { playerId ->
+                        onAssistPlayerClick?.invoke(playerId)
+                    }
+                }
             } else {
                 binding.bootTextView.visibility = View.GONE
                 binding.textViewAssistBy.visibility = View.GONE
@@ -57,6 +66,12 @@ class MatchEventAdapter : ListAdapter<EventWithPlayer, MatchEventAdapter.ViewHol
             binding.root.setOnLongClickListener {
                 onLongClick?.invoke(eventWithPlayer)
                 true
+            }
+
+            binding.fullNameTv.setOnClickListener {
+                player.id?.let { playerId ->
+                    onPlayerClick?.invoke(playerId)
+                }
             }
         }
     }
@@ -69,6 +84,6 @@ class MatchEventAdapter : ListAdapter<EventWithPlayer, MatchEventAdapter.ViewHol
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(getItem(position), onEventLongClick)
+        holder.bind(getItem(position), onEventLongClick, onPlayerClick, onAssistPlayerClick)
     }
 }
