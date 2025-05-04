@@ -56,4 +56,11 @@
     <string name="zostava">Zostava</string>
     <string name="minute">Minúta</string>
     <string name="importovat_statistiky">Importovať štatistiky do súpisky</string>
+    <string name="welcome_header">🟦 Vitaj v mobilnej aplikácii futbalového klubu FK Snaha Real</string>
+    <string name="welcome_text">Vitaj v mobilnej aplikácii futbalového klubu FK Snaha Real – mieste, kde nájdeš všetko dôležité o svojom obľúbenom tíme.</string>
+    <string name="welcome_text2">Sme tím, ktorý bol založený s cieľom rozvíjať futbalové nadšenie, podporovať mladé talenty a vytvárať silnú komunitu hráčov, fanúšikov a podporovateľov. Naše hodnoty sú odhodlanie, fair-play a tímová spolupráca – preto názov Snaha nie je náhoda.</string>
+    <string name="bud_sucast">🫂 Buď súčasťou nášho príbehu</string>
+    <string name="welcome_end">Nezáleží na tom, či si hráč, rodič, tréner alebo fanúšik – v tejto aplikácii máš vždy prístup k tomu, čo sa v klube deje. Spolu tvoríme jeden tím – FK Snaha Real!</string>
+    <string name="welcome">Vitaj v aplikácií</string>
+
 </resources>

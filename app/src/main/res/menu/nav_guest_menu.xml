@@ -3,6 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/nav_welcome"
+        android:icon="@android:drawable/ic_menu_compass"
+        android:title="@string/welcome" />
+    <item
         android:id="@+id/nav_players"
         android:icon="@drawable/supiska_icon"
         android:title="@string/supiska" />

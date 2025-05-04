@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/playerFragment">
+    app:startDestination="@id/welcomeFragment">
 
     <fragment
         android:id="@+id/playerFragment"
@@ -62,5 +62,9 @@
             android:id="@+id/action_matchDetailsFragment_to_playerInfoFragment"
             app:destination="@id/playerInfoFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/welcomeFragment"
+        android:name="com.example.tmasemestralnapraca.WelcomeFragment"
+        android:label="Vitaj v aplikácií" />
 
 </navigation>
