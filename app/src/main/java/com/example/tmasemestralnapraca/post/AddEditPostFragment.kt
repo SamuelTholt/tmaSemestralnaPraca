@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.tmasemestralnapraca.AppNotificationManager
 import com.example.tmasemestralnapraca.databinding.FragmentAddEditPostBinding
 import com.example.tmasemestralnapraca.player.AddEditPlayerFragment
 import com.example.tmasemestralnapraca.player.AddEditPlayerFragment.Companion
@@ -26,6 +27,8 @@ class AddEditPostFragment : BottomSheetDialogFragment() {
     private val postRepository = PostRepository()
     private val coroutineScope = CoroutineScope(Dispatchers.Main)
 
+    private lateinit var notificationManager: AppNotificationManager
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -36,6 +39,9 @@ class AddEditPostFragment : BottomSheetDialogFragment() {
     }
 
     override fun onAttach(context: Context) {
+
+        notificationManager = AppNotificationManager(context)
+
         super.onAttach(context)
         val target = targetFragment
         if (target is AddEditPostListener) {
@@ -76,6 +82,7 @@ class AddEditPostFragment : BottomSheetDialogFragment() {
                 coroutineScope.launch {
                     try {
                         listener?.onSaveBtnClicked(post != null, newPost)
+                        notificationManager.showPostAddedNotification(newPost)
                     } catch (e: Exception) {
                         Log.e(AddEditPlayerFragment.TAG, "Error saving post", e)
                     }

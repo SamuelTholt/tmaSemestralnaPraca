@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.cloudinary.android.MediaManager
 import com.cloudinary.android.callback.ErrorInfo
 import com.cloudinary.android.callback.UploadCallback
+import com.example.tmasemestralnapraca.AppNotificationManager
 import com.example.tmasemestralnapraca.databinding.FragmentGalleryBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -37,6 +38,9 @@ class GalleryFragment : Fragment(), GalleryAdapter.PhotoClickListener {
 
     private var isAdmin: Boolean = false
 
+    private lateinit var notificationManager: AppNotificationManager
+    private var pendingUploadCount = 0
+
     private lateinit var multiplePhotoPickLauncher: ActivityResultLauncher<PickVisualMediaRequest>
 
     override fun onCreateView(
@@ -50,6 +54,7 @@ class GalleryFragment : Fragment(), GalleryAdapter.PhotoClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        notificationManager = AppNotificationManager(requireContext())
 
         val sharedPref = requireContext().getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
         isAdmin = sharedPref.getBoolean("isAdminLoggedIn", false)
@@ -106,6 +111,7 @@ class GalleryFragment : Fragment(), GalleryAdapter.PhotoClickListener {
             if (uris.isNotEmpty()) {
 
                 lifecycleScope.launch(Dispatchers.IO) {
+                    var successCount = 0
                     uris.forEach { uri ->
                         try {
 
@@ -114,10 +120,21 @@ class GalleryFragment : Fragment(), GalleryAdapter.PhotoClickListener {
                             if (tempFile != null) {
 
                                 uploadToCloudinary(tempFile)
+                                successCount++
                             }
                         } catch (e: Exception) {
                             e.printStackTrace()
                             showToast("Chyba pri nahrávaní: ${e.message}")
+                        }
+                    }
+
+                    if (successCount > 0) {
+                        withContext(Dispatchers.Main) {
+                            if (successCount == 1) {
+                                notificationManager.showImageAddedNotification()
+                            } else {
+                                notificationManager.showMultipleImagesAddedNotification(successCount)
+                            }
                         }
                     }
                 }

@@ -9,7 +9,7 @@
         android:id="@+id/playerFragment"
         android:name="com.example.tmasemestralnapraca.player.PlayerFragment"
         android:label="Súpiska"
-        tools:layout="@layout/fragment_player" >
+        tools:layout="@layout/fragment_player">
         <action
             android:id="@+id/action_playerFragment_to_playerInfoFragment"
             app:destination="@id/playerInfoFragment" />
@@ -40,13 +40,13 @@
     <fragment
         android:id="@+id/teamFragment"
         android:name="com.example.tmasemestralnapraca.teams.TeamFragment"
-        android:label="fragment_team"
+        android:label="Tabuľka"
         tools:layout="@layout/fragment_team" />
     <fragment
         android:id="@+id/matchFragment"
         android:name="com.example.tmasemestralnapraca.matches.MatchFragment"
         android:label="Zápasy"
-        tools:layout="@layout/fragment_match" >
+        tools:layout="@layout/fragment_match">
         <action
             android:id="@+id/action_matchFragment_to_matchDetailsFragment"
             app:destination="@id/matchDetailsFragment" />

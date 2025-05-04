@@ -94,8 +94,8 @@ class MatchAdapter(private val listener: MatchClickListener,
             }
 
 
-            val ourTeamName = "Náš tím"
-            val ourLogo = com.example.tmasemestralnapraca.R.drawable.goal_icon
+            val ourTeamName = "FK Snaha Real"
+            val ourLogo = com.example.tmasemestralnapraca.R.drawable.our_logo
 
             if (match.playedHome) {
                 binding.homeTeamViewTv.text = ourTeamName

@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.tmasemestralnapraca.AppNotificationManager
 import com.example.tmasemestralnapraca.R
 import com.example.tmasemestralnapraca.databinding.FragmentAddEditPlayerBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -22,8 +23,12 @@ class AddEditPlayerFragment : BottomSheetDialogFragment() {
     private val playerRepository = PlayerRepository()
     private val coroutineScope = CoroutineScope(Dispatchers.Main)
 
+
+    private lateinit var notificationManager: AppNotificationManager
     override fun onAttach(context: Context) {
         super.onAttach(context)
+        notificationManager = AppNotificationManager(context)
+
         val target = targetFragment
         if (target is AddEditPlayerListener) {
             listener = target
@@ -130,6 +135,7 @@ class AddEditPlayerFragment : BottomSheetDialogFragment() {
                 coroutineScope.launch {
                     try {
                         listener?.onSaveBtnClicked(player != null, newPlayer)
+                        notificationManager.showPlayerAddedNotification(newPlayer)
                     } catch (e: Exception) {
                         Log.e(TAG, "Error saving player", e)
                     }
