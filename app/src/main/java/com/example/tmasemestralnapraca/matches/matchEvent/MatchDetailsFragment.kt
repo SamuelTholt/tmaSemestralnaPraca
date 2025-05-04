@@ -91,10 +91,93 @@ class MatchDetailsFragment : Fragment() {
 
     private fun initRecyclerView() {
         eventsAdapter = MatchEventAdapter()
+
+        eventsAdapter.onEventLongClick = { eventWithPlayer ->
+            if (isAdmin) {
+                showDeleteEventDialog(eventWithPlayer)
+            }
+        }
+
         binding.eventsRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = eventsAdapter
         }
+    }
+
+    private fun showDeleteEventDialog(eventWithPlayer: EventWithPlayer) {
+        val event = eventWithPlayer.event
+        val player = eventWithPlayer.player
+
+        AlertDialog.Builder(requireContext())
+            .setTitle("Vymazať event")
+            .setMessage("Naozaj chcete vymazať ${getEventTypeName(event.eventType)} v ${event.minute}′ min. pre hráča ${player.firstName} ${player.lastName}?")
+            .setPositiveButton("Vymazať") { _, _ ->
+                event.id?.let { eventId ->
+                    deleteEvent(eventId, eventWithPlayer)
+                }
+            }
+            .setNegativeButton("Zrušiť", null)
+            .show()
+    }
+
+    private fun getEventTypeName(eventType: EventType): String {
+        return when (eventType) {
+            EventType.GOAL -> "gól"
+            EventType.YELLOW_CARD -> "žltá karta"
+            EventType.RED_CARD -> "červená karta"
+        }
+    }
+
+    private fun deleteEvent(eventId: String, eventWithPlayer: EventWithPlayer) {
+        lifecycleScope.launch {
+            try {
+                matchRepository.deleteMatchEventById(eventId)
+
+                val updatedEvents = matchDetail.events.toMutableList()
+                updatedEvents.remove(eventWithPlayer)
+
+                if (eventWithPlayer.event.eventType == EventType.RED_CARD) {
+
+                }
+
+                //Ak má hrač 2 žlté
+                // potrebujeme vymazať aj vygenerovanú červenú kartu
+                if (eventWithPlayer.event.eventType == EventType.YELLOW_CARD) {
+                    val playerId = eventWithPlayer.event.playerId
+                    val remainingYellowCards = updatedEvents.count {
+                        it.event.playerId == playerId && it.event.eventType == EventType.YELLOW_CARD
+                    }
+
+                    if (remainingYellowCards == 1) {
+                        val redCardToDelete = updatedEvents.find {
+                            it.event.playerId == playerId && it.event.eventType == EventType.RED_CARD
+                        }
+
+                        if (redCardToDelete != null && redCardToDelete.event.id != null) {
+                            matchRepository.deleteMatchEventById(redCardToDelete.event.id!!)
+                            updatedEvents.remove(redCardToDelete)
+                        }
+                    }
+                }
+
+                val sortedEvents = updatedEvents.sortedBy { it.event.minute }
+                matchDetail.events = sortedEvents
+                eventsAdapter.submitList(sortedEvents)
+
+                Toast.makeText(requireContext(), "Event vymazaný", Toast.LENGTH_SHORT).show()
+                refreshFragment()
+            } catch (e: Exception) {
+                Toast.makeText(requireContext(), "Chyba pri mazaní eventu: ${e.message}", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    @SuppressLint("DetachAndAttachSameFragment")
+    private fun refreshFragment() {
+        parentFragmentManager.beginTransaction()
+            .detach(this)
+            .attach(this)
+            .commit()
     }
 
     @SuppressLint("SetTextI18n")
@@ -264,6 +347,7 @@ class MatchDetailsFragment : Fragment() {
                             eventsAdapter.submitList(sortedEvents)
 
                             Toast.makeText(requireContext(), "Event pridaný", Toast.LENGTH_SHORT).show()
+                            refreshFragment()
                         } catch (e: Exception) {
                             Toast.makeText(requireContext(), "Chyba pri pridávaní eventu: ${e.message}", Toast.LENGTH_LONG).show()
                         }

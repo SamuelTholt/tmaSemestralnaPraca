@@ -20,12 +20,13 @@ class MatchEventAdapter : ListAdapter<EventWithPlayer, MatchEventAdapter.ViewHol
         }
     }
 ) {
+    var onEventLongClick: ((EventWithPlayer) -> Unit)? = null
 
     class ViewHolder(private val binding: MatchEventItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         @SuppressLint("SetTextI18n")
-        fun bind(eventWithPlayer: EventWithPlayer) {
+        fun bind(eventWithPlayer: EventWithPlayer, onLongClick: ((EventWithPlayer) -> Unit)?) {
 
             binding.bootTextView.visibility = View.GONE
             binding.textViewAssistBy.visibility = View.GONE
@@ -52,6 +53,11 @@ class MatchEventAdapter : ListAdapter<EventWithPlayer, MatchEventAdapter.ViewHol
                 binding.bootTextView.visibility = View.GONE
                 binding.textViewAssistBy.visibility = View.GONE
             }
+
+            binding.root.setOnLongClickListener {
+                onLongClick?.invoke(eventWithPlayer)
+                true
+            }
         }
     }
 
@@ -63,6 +69,6 @@ class MatchEventAdapter : ListAdapter<EventWithPlayer, MatchEventAdapter.ViewHol
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), onEventLongClick)
     }
 }

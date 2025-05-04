@@ -54,6 +54,10 @@ class MatchRepository {
 
 
 
+    suspend fun deleteMatchEventById(id: String) {
+        eventsCollection.document(id).delete().await()
+    }
+
     suspend fun getMatchDetailById(matchId: String): MatchDetail {
         // Získať zápas
         val matchDoc = matchesCollection.document(matchId).get().await()
