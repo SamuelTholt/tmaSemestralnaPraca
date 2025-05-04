@@ -69,10 +69,6 @@ class MatchRepository {
         val matchDoc = matchesCollection.document(matchId).get().await()
         val match = matchDoc.toObject(MatchModel::class.java) ?: MatchModel()
 
-        // Získať zostavu
-        val lineupSnapshot = lineupCollection.whereEqualTo("matchId", matchId).get().await()
-        val lineup = lineupSnapshot.toObjects(LineupPlayer::class.java)
-
         // Získať udalosti
         val eventsSnapshot = eventsCollection.whereEqualTo("matchId", matchId).get().await()
         val events = eventsSnapshot.toObjects(MatchEvent::class.java)
@@ -81,57 +77,6 @@ class MatchRepository {
         val allPlayers = playersCollection.get().await().documents.mapNotNull {
             it.toObject(PlayerModel::class.java)?.apply { id = it.id }
         }
-
-        // Spracovať zostavu - základná 11
-        val startingLineup = lineup.filter { it.isStarting }.map { lineupPlayer ->
-            val player = allPlayers.find { it.id == lineupPlayer.playerId } ?: return@map null
-
-            // Spočítať štatistiky hráča v zápase
-            val playerEvents = events.filter { it.playerId == player.id }
-            val goals = playerEvents.count { it.eventType == EventType.GOAL }
-            val assists = events.count { it.playerAssistId == player.id }
-            val yellowCards = playerEvents.count { it.eventType == EventType.YELLOW_CARD }
-            val redCards = playerEvents.count { it.eventType == EventType.RED_CARD }
-
-            // Čas na ihrisku
-            val minutesIn = if (lineupPlayer.isStarting) 0 else
-                playerEvents.find { it.eventType == EventType.SUBSTITUTION_IN }?.minute
-            val minutesOut = playerEvents.find { it.eventType == EventType.SUBSTITUTION_OUT }?.minute
-
-            PlayerWithStats(
-                player = player,
-                goals = goals,
-                assists = assists,
-                yellowCards = yellowCards,
-                redCards = redCards,
-                minutesIn = minutesIn,
-                minutesOut = minutesOut
-            )
-        }.filterNotNull().sortedBy { it.player.numberOfShirt }
-
-        // Spracovať náhradníkov
-        val substitutes = lineup.filter { !it.isStarting }.map { lineupPlayer ->
-            val player = allPlayers.find { it.id == lineupPlayer.playerId } ?: return@map null
-
-            val playerEvents = events.filter { it.playerId == player.id }
-            val goals = playerEvents.count { it.eventType == EventType.GOAL }
-            val assists = events.count { it.playerAssistId == player.id }
-            val yellowCards = playerEvents.count { it.eventType == EventType.YELLOW_CARD }
-            val redCards = playerEvents.count { it.eventType == EventType.RED_CARD }
-
-            val minutesIn = playerEvents.find { it.eventType == EventType.SUBSTITUTION_IN }?.minute
-            val minutesOut = playerEvents.find { it.eventType == EventType.SUBSTITUTION_OUT }?.minute
-
-            PlayerWithStats(
-                player = player,
-                goals = goals,
-                assists = assists,
-                yellowCards = yellowCards,
-                redCards = redCards,
-                minutesIn = minutesIn,
-                minutesOut = minutesOut
-            )
-        }.filterNotNull().sortedBy { it.player.numberOfShirt }
 
         // Spracovať udalosti s informáciami o hráčoch
         val eventsWithPlayers = events.mapNotNull { event ->
@@ -147,10 +92,9 @@ class MatchRepository {
             )
         }.sortedBy { it.event.minute }
 
+        // Vrátiť MatchDetail bez zostavy
         return MatchDetail(
             match = match,
-            startingLineup = startingLineup,
-            substitutes = substitutes,
             events = eventsWithPlayers
         )
     }
@@ -229,46 +173,6 @@ class MatchRepository {
             // Najprv aktualizujeme základné dáta zápasu
             val matchRef = db.collection("matches").document(matchDetail.match.id.toString())
             matchRef.set(matchDetail.match)
-
-            // Aktualizujeme zoznam hráčov v základnej zostave
-            val startingPlayersCollection = matchRef.collection("startingLineup")
-            // Najprv vymažeme všetkých existujúcich hráčov
-            startingPlayersCollection.get().await().documents.forEach { doc ->
-                doc.reference.delete().await()
-            }
-            // Potom pridáme aktuálnych hráčov
-            matchDetail.startingLineup.forEach { playerStats ->
-                val playerStatsMap = mapOf(
-                    "playerId" to playerStats.player.id,
-                    "goals" to playerStats.goals,
-                    "assists" to playerStats.assists,
-                    "yellowCards" to playerStats.yellowCards,
-                    "redCards" to playerStats.redCards,
-                    "minutesIn" to playerStats.minutesIn,
-                    "minutesOut" to playerStats.minutesOut
-                )
-                startingPlayersCollection.add(playerStatsMap).await()
-            }
-
-            // Aktualizujeme zoznam náhradníkov
-            val substitutesCollection = matchRef.collection("substitutes")
-            // Najprv vymažeme všetkých existujúcich náhradníkov
-            substitutesCollection.get().await().documents.forEach { doc ->
-                doc.reference.delete().await()
-            }
-            // Potom pridáme aktuálnych náhradníkov
-            matchDetail.substitutes.forEach { playerStats ->
-                val playerStatsMap = mapOf(
-                    "playerId" to playerStats.player.id,
-                    "goals" to playerStats.goals,
-                    "assists" to playerStats.assists,
-                    "yellowCards" to playerStats.yellowCards,
-                    "redCards" to playerStats.redCards,
-                    "minutesIn" to playerStats.minutesIn,
-                    "minutesOut" to playerStats.minutesOut
-                )
-                substitutesCollection.add(playerStatsMap).await()
-            }
 
             // Aktualizujeme zoznam eventov
             val eventsCollection = matchRef.collection("events")

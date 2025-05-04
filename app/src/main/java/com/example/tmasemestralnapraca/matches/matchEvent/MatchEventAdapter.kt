@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.tmasemestralnapraca.databinding.MatchEventItemBinding
 import com.example.tmasemestralnapraca.matches.matchEvent.EventType
 import com.example.tmasemestralnapraca.matches.matchEvent.EventWithPlayer
@@ -34,15 +35,14 @@ class MatchEventAdapter : ListAdapter<EventWithPlayer, MatchEventAdapter.ViewHol
 
             val event = eventWithPlayer.event
 
-
+            val player = eventWithPlayer.player
+            binding.fullNameTv.text = player.firstName + " " + player.lastName
             binding.eventTimeTv.text = "${event.minute}′"
 
             val iconText = when (event.eventType) {
                 EventType.GOAL -> "⚽"
-                EventType.YELLOW_CARD -> "\uD83D\uDFE5"
-                EventType.RED_CARD -> "\uD83D\uDFE8"
-                EventType.SUBSTITUTION_IN -> "↗️"
-                EventType.SUBSTITUTION_OUT -> "↘️"
+                EventType.YELLOW_CARD -> "\uD83D\uDFE8"
+                EventType.RED_CARD -> "\uD83D\uDFE5"
             }
             binding.playerEventTv.text = iconText
 

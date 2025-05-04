@@ -7,27 +7,10 @@
     android:padding="16dp">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hráč:"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="8dp"
-        tools:ignore="HardcodedText" />
-
-    <Spinner
-        android:id="@+id/spinnerPlayer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:minHeight="48dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Typ eventu:"
+        android:text="Typ eventu"
         android:textSize="16sp"
-        android:textStyle="bold"
         android:layout_marginBottom="8dp"
         tools:ignore="HardcodedText" />
 
@@ -39,46 +22,47 @@
         android:minHeight="48dp" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Minúta:"
+        android:text="Hráč"
         android:textSize="16sp"
-        android:textStyle="bold"
         android:layout_marginBottom="8dp"
         tools:ignore="HardcodedText" />
 
-    <EditText
-        android:id="@+id/etEventMinute"
+    <Spinner
+        android:id="@+id/spinnerPlayer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:hint="Zadajte minútu"
-        android:inputType="number"
-        android:minHeight="48dp"
-        tools:ignore="Autofill,HardcodedText,TextContrastCheck,VisualLintTextFieldSize" />
+        android:minHeight="48dp" />
 
-    <!-- Assist player section - only visible for goals -->
-    <LinearLayout
-        android:id="@+id/assistPlayerLayout"
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:visibility="gone">
+        android:layout_marginBottom="16dp"
+        android:hint="Minúta"
+        tools:ignore="HardcodedText">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Asistencia:"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="8dp"
-            tools:ignore="HardcodedText" />
-
-        <Spinner
-            android:id="@+id/spinnerAssistPlayer"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etEventMinute"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp" />
-    </LinearLayout>
+            android:inputType="number"
+            android:textColorHint="#546E7A"
+            tools:ignore="VisualLintTextFieldSize,TextContrastCheck" />
+    </com.google.android.material.textfield.TextInputLayout>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Asistujúci hráč (len pre góly)"
+        android:textSize="16sp"
+        android:layout_marginBottom="8dp"
+        tools:ignore="HardcodedText" />
+
+    <Spinner
+        android:id="@+id/spinnerAssistPlayer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="48dp" />
 </LinearLayout>

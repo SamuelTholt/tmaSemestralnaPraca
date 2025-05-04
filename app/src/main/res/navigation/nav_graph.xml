@@ -53,7 +53,7 @@
     </fragment>
     <fragment
         android:id="@+id/matchDetailsFragment"
-        android:name="com.example.tmasemestralnapraca.matches.MatchDetailsFragment"
+        android:name="com.example.tmasemestralnapraca.matches.matchEvent.MatchDetailsFragment"
         android:label="MatchDetailsFragment" >
         <argument
             android:name="match_id"
