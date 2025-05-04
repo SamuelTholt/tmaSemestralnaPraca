@@ -52,7 +52,6 @@ class PlayerInfoFragment : Fragment() {
                     binding.assistsTv.text = it.assists.toString()
                     binding.yellowCardsTv.text = it.yellowCards.toString()
                     binding.redCardsTv.text = it.redCards.toString()
-                    binding.minutesPlayedTv.text = it.minutesPlayed.toString()
                 }
             }
         }

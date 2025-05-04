@@ -18,7 +18,7 @@
     <string name="player_minutes">Počet odohraných minút</string>
     <string name="supiska">Súpiska</string>
     <string name="exit_app">Ukonči aplikáciu</string>
-    <string name="navrat_na_supisku">Návrat na súpisku</string>
+    <string name="navrat_na_supisku">Návrat</string>
     <string name="admin_login">Admin Login</string>
 
     <string name="post_header">Nadpis príspevku</string>
@@ -44,9 +44,9 @@
     <string name="detaily_zapasu">Detaily zápasu</string>
     <string name="back">Back</string>
     <string name="lokacia">Lokácia</string>
-    <string name="stav_zapasu">3 : 2</string>
-    <string name="date_time">15.05.2025 14:00</string>
-    <string name="doma">Doma</string>
+    <string name="stav_zapasu">- : -</string>
+    <string name="date_time">00.00.0000 00:00</string>
+    <string name="doma">Location</string>
     <string name="zakladna_11">Základná zostava</string>
     <string name="nahradnici">Náhradníci</string>
     <string name="prehlad_zapasu">Prehľad zápasu</string>

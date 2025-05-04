@@ -1,4 +1,4 @@
-package com.example.tmasemestralnapraca.matches
+package com.example.tmasemestralnapraca.matches.matchEvent
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -7,10 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.tmasemestralnapraca.databinding.MatchEventItemBinding
-import com.example.tmasemestralnapraca.matches.matchEvent.EventType
-import com.example.tmasemestralnapraca.matches.matchEvent.EventWithPlayer
 
 class MatchEventAdapter : ListAdapter<EventWithPlayer, MatchEventAdapter.ViewHolder>(
     object : DiffUtil.ItemCallback<EventWithPlayer>() {

@@ -95,7 +95,6 @@ class AddEditPlayerFragment : BottomSheetDialogFragment() {
         binding.playerAssistsEditText.setText(player.assists.toString())
         binding.playerYellowCardsEditText.setText(player.yellowCards.toString())
         binding.playerRedCardsEditText.setText(player.redCards.toString())
-        binding.playerMinutesEditText.setText(player.minutesPlayed.toString())
         binding.saveBtn.text = "Update"
     }
 
@@ -111,7 +110,6 @@ class AddEditPlayerFragment : BottomSheetDialogFragment() {
             val assists = if (player == null) 0 else binding.playerAssistsEditText.text.toString().toInt()
             val yellowCards = if (player == null) 0 else binding.playerYellowCardsEditText.text.toString().toInt()
             val redCards = if (player == null) 0 else binding.playerRedCardsEditText.text.toString().toInt()
-            val minutesPlayed = if (player == null) 0 else binding.playerMinutesEditText.text.toString().toInt()
 
             if (firstName.isNotEmpty() && lastName.isNotEmpty() && numberOfShirt.isNotEmpty() &&
                 selectedPosition.isNotEmpty()) {
@@ -125,7 +123,6 @@ class AddEditPlayerFragment : BottomSheetDialogFragment() {
                     assists = assists,
                     yellowCards = yellowCards,
                     redCards = redCards,
-                    minutesPlayed = minutesPlayed
                 )
                 Log.d("PlayerData", "Saving player: $newPlayer")
 

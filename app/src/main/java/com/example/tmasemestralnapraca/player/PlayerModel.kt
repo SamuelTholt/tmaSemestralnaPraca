@@ -10,5 +10,4 @@ data class PlayerModel (
     val assists: Int = 0,
     val yellowCards: Int = 0,
     val redCards: Int = 0,
-    val minutesPlayed: Int = 0
 )

@@ -309,40 +309,6 @@
                     tools:ignore="HardcodedText" />
 
 
-                <ImageView
-                    android:id="@+id/img_time"
-                    android:layout_width="22dp"
-                    android:layout_height="19dp"
-                    android:layout_marginTop="32dp"
-                    android:src="@drawable/time_icon"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/img_red"
-                    tools:ignore="ContentDescription" />
-
-                <TextView
-                    android:id="@+id/minutesPlayed"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="32dp"
-                    android:text="@string/player_minutes"
-                    android:textColor="@color/color_white_f4fefd"
-                    android:textSize="14sp"
-                    app:layout_constraintEnd_toStartOf="@+id/guideline"
-                    app:layout_constraintStart_toEndOf="@+id/img_time"
-                    app:layout_constraintTop_toBottomOf="@id/redCards" />
-
-                <TextView
-                    android:id="@+id/minutesPlayedTv"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="1200"
-                    android:textColor="@color/white"
-                    android:textSize="14sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/guideline"
-                    app:layout_constraintTop_toTopOf="@id/minutesPlayed"
-                    tools:ignore="HardcodedText" />
-
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/guideline"
                     android:layout_width="wrap_content"

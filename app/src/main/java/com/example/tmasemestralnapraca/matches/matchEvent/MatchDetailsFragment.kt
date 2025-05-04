@@ -19,7 +19,6 @@ import com.bumptech.glide.Glide
 import com.example.tmasemestralnapraca.R
 import com.example.tmasemestralnapraca.databinding.FragmentMatchDetailsBinding
 import com.example.tmasemestralnapraca.matches.MatchDetail
-import com.example.tmasemestralnapraca.matches.MatchEventAdapter
 import com.example.tmasemestralnapraca.matches.MatchRepository
 import com.example.tmasemestralnapraca.player.PlayerModel
 import com.example.tmasemestralnapraca.player.PlayerRepository
