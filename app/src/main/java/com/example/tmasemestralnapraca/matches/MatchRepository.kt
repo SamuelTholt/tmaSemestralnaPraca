@@ -86,7 +86,7 @@ class MatchRepository {
             )
         }.sortedBy { it.event.minute }
 
-        // Vrátiť MatchDetail bez zostavy
+        // Vrátiť MatchDetail
         return MatchDetail(
             match = match,
             events = eventsWithPlayers

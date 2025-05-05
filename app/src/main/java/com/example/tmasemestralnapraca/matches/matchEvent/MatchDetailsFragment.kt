@@ -113,24 +113,20 @@ class MatchDetailsFragment : Fragment() {
             try {
                 val playerStats = mutableMapOf<String, PlayerStatUpdate>()
 
-                // Collect statistics from events
                 matchDetail.events.forEach { eventWithPlayer ->
                     val event = eventWithPlayer.event
                     val playerId = event.playerId
 
-                    // Initialize player stats if not already present
                     if (!playerStats.containsKey(playerId)) {
                         playerStats[playerId] = PlayerStatUpdate()
                     }
 
-                    // Update stats based on event type
                     when (event.eventType) {
                         EventType.GOAL -> playerStats[playerId]?.goals = (playerStats[playerId]?.goals ?: 0) + 1
                         EventType.YELLOW_CARD -> playerStats[playerId]?.yellowCards = (playerStats[playerId]?.yellowCards ?: 0) + 1
                         EventType.RED_CARD -> playerStats[playerId]?.redCards = (playerStats[playerId]?.redCards ?: 0) + 1
                     }
 
-                    // Handle assists
                     event.playerAssistId?.toString()?.let { assistPlayerId ->
                         if (!playerStats.containsKey(assistPlayerId)) {
                             playerStats[assistPlayerId] = PlayerStatUpdate()
@@ -139,7 +135,6 @@ class MatchDetailsFragment : Fragment() {
                     }
                 }
 
-                // Update players in database
                 var updatedPlayerCount = 0
                 for ((playerId, stats) in playerStats) {
                     val player = allPlayers.find { it.id.toString() == playerId }
