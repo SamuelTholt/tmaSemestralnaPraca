@@ -29,8 +29,8 @@
 
     <string name="team_name">Názov tímu</string>
     <string name="team_played">Počet odohratých zápasov</string>
-    <string name="team_goals_scored">Počet strelených zápasov</string>
-    <string name="team_conceded_scored">Počet inkasovaných zápasov</string>
+    <string name="team_goals_scored">Počet strelených gólov</string>
+    <string name="team_conceded_scored">Počet inkasovaných gólov</string>
     <string name="team_points">Počet bodov</string>
     <string name="team_logo_image">Pridať logo(obrázok)</string>
     <string name="team_logo">Logo tímu</string>
