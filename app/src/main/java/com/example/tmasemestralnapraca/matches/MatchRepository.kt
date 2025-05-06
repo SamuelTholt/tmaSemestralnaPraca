@@ -12,6 +12,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class MatchRepository {
     private val db = FirebaseFirestore.getInstance()
@@ -139,10 +142,6 @@ class MatchRepository {
             query = query.whereEqualTo("played", played)
         }
 
-        if (sortDirection != null) {
-            query = query.orderBy("date", sortDirection)
-        }
-
         val subscription = query.addSnapshotListener { snapshot, error ->
             if (error != null) {
                 close(error)
@@ -153,7 +152,28 @@ class MatchRepository {
                 val matches = snapshot.documents.mapNotNull { doc ->
                     doc.toObject(MatchModel::class.java)?.copy(id = doc.id)
                 }
-                trySend(matches)
+
+                val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+                val sortedMatches = matches.sortedWith { match1, match2 ->
+                    try {
+                        val date1 = dateFormat.parse(match1.date) ?: Date(0)
+                        val date2 = dateFormat.parse(match2.date) ?: Date(0)
+
+                        if (sortDirection == Query.Direction.DESCENDING) {
+                            date2.compareTo(date1)
+                        } else {
+                            date1.compareTo(date2)
+                        }
+                    } catch (e: Exception) {
+                        if (sortDirection == Query.Direction.DESCENDING) {
+                            match2.date.compareTo(match1.date)
+                        } else {
+                            match1.date.compareTo(match2.date)
+                        }
+                    }
+                }
+
+                trySend(sortedMatches)
             }
         }
 

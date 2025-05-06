@@ -49,7 +49,7 @@
     <string name="doma">Location</string>
     <string name="zakladna_11">Základná zostava</string>
     <string name="nahradnici">Náhradníci</string>
-    <string name="prehlad_zapasu">Prehľad zápasu</string>
+    <string name="prehlad_zapasu">Prehľad našich udalostí</string>
     <string name="pridat_hraca_do_zakladnej_zostavy">Pridať hráča do základnej zostavy</string>
     <string name="pridat_nahradnika">Pridať náhradníka</string>
     <string name="pridat_event">Pridať event</string>

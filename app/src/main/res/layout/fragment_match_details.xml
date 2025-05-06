@@ -148,7 +148,8 @@
             android:layout_marginTop="8dp"
             android:backgroundTint="@color/color0ef6cc"
             android:text="@string/pridat_event"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            tools:ignore="VisualLintButtonSize" />
 
         <Button
             android:id="@+id/btnImportStats"
@@ -157,7 +158,8 @@
             android:layout_marginTop="8dp"
             android:backgroundTint="@color/color0ef6cc"
             android:text="@string/importovat_statistiky"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            tools:ignore="VisualLintButtonSize" />
 
         <TextView
             android:id="@+id/eventsHeader"
